@@ -4,6 +4,8 @@ import { Container, Row, Col, Image } from 'react-bootstrap';
 import Home from './home';
 
 const App = () => {
+
+    console.log('changes by ofir');
     return (
         <Container>
             <Row>
