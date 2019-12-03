@@ -1,0 +1,6 @@
+pages:
+    main page - form - /
+
+    login - page login for the lotto page - /login
+        lotto - page of the lotto - /lotto
+        admin - page of admin - /admin

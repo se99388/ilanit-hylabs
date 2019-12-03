@@ -2,7 +2,7 @@ import { query } from './pg';
 
 export const getRows = async (text, ...params) => {
     const { rows } = await query(text, params);
-    return rows.map(row => ({ from: 'hylabs', ...row }));
+    return rows;
 };
 
 // getRow(text, 1,2,3) => text=text, args=[1,2,3]

@@ -3,6 +3,7 @@ import { getRow, getRows } from './result';
 export const getUsers = () => {
     const sql = `
         SELECT 
+            id,
             first_name,
             last_name,
             lab 

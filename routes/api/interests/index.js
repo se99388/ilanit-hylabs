@@ -1,12 +1,12 @@
 import express from 'express';
-import { getInterest } from '../../../db/interests';
+import { getInterest, getInterests } from '../../../db/interests';
 
 const router = express.Router();
 
-// router.get('/', async (req, res) => {
-//     const users = await getUsers();
-//     res.json(users);
-// });
+router.get('/', async (req, res) => {
+    const interests = await getInterests();
+    res.json(interests);
+});
 
 router.get('/:id', async (req, res) => {
     const { id } = req.params;

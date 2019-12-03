@@ -1,4 +1,13 @@
-import { getRow } from './result';
+import { getRow, getRows } from './result';
+
+export const getInterests = () => {
+    const sql = `
+        SELECT *
+        FROM interests
+    `;
+
+    return getRows(sql);
+};
 
 export const getInterest = id => {
     const sql = `
