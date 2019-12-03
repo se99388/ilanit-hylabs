@@ -5,7 +5,6 @@ import Home from './home';
 
 const App = () => {
 
-    console.log('changes by ofir');
     return (
         <Container>
             <Row>
