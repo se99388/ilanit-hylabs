@@ -4,6 +4,7 @@ import { Container, Row, Col, Image } from 'react-bootstrap';
 import Home from './home';
 
 const App = () => {
+
     return (
         <Container>
             <Row>
