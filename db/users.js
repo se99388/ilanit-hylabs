@@ -23,15 +23,15 @@ export const getUser = id => {
     return getRow(sql, id);
 };
 
-export const addUser = (values) => {
-    const sql =
-        `INSERT INTO users (first_name,
+export const addUser = (...userDetails) => {
+    const sql =`INSERT INTO users (first_name,
             last_name,
             email, 
             phone, 
             institute,
             lab)
-    VALUES
-    ('${values.firstName}', '${values.lastName}', '${values.email}',' ${values.phone}', '${values.institute}', '${values.lab}') RETURNING *`
-    return getRows(sql);
+            VALUES
+    ($1,$2, $3,$4, $5, $6) RETURNING *`;
+    return getRow(sql, ...userDetails);
 }
+

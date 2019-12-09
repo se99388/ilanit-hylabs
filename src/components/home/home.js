@@ -9,52 +9,45 @@ import { withRouter } from 'react-router-dom';
 
 
 const Home = (props) => {
+    console.log(props)
     const [error, setError] = useState(null);
     const createInitailVaules = () => {
-        return userDetailsArr.reduce((accum, cuurentVal) => {
-            accum[cuurentVal] = '';
+        return userDetailsArr.reduce((accum, currentVal) => {
+            accum[currentVal] = '';
             return accum;
         }, {})
     }
 
-    const createFormData = () => {
-        const formData = [
-            { type: 'text', label: 'First name:', placeholder: "Enter first name" },
-            { type: 'text', label: 'Last name:', placeholder: "Enter last name" },
-            { type: 'text', label: 'Email:', placeholder: "Enter email" },
-            { type: 'text', label: 'Phone:', placeholder: "Enter phone No." },
-            { type: 'text', label: 'Institute/Company', placeholder: "Enter Institute/Company" },
-            { type: 'text', label: 'Lab', placeholder: "Enter lab" },
-        ]
-        for (let i = 0; i < userDetailsArr.length; i++) {
-            formData[i].name = userDetailsArr[i]
-        }
-        return formData;
-    }
+    const formData = [
+        { type: 'text', label: 'First name:', placeholder: "Enter first name" },
+        { type: 'text', label: 'Last name:', placeholder: "Enter last name" },
+        { type: 'text', label: 'Email:', placeholder: "Enter email" },
+        { type: 'text', label: 'Phone:', placeholder: "Enter phone No." },
+        { type: 'text', label: 'Institute/Company', placeholder: "Enter Institute/Company" },
+        { type: 'text', label: 'Lab', placeholder: "Enter lab" },
+    ]
 
     const handleMySubmit = async (values) => {
         try {
             const response = await addUser(values);
-            if (response.errors) {
-                setError(response.errors)
-            }
-            else if (response.name === 'error') {
-                if (response.code === "23505") {
-                    response.detail = response.detail.replace(/[\(\)]|Key/g, '').replace(/=/g, ' ');
-                }
-                setError(response.detail)
+            console.log("response", response)
+            //validation error
+            if (response.error) {
+                setError(response.error)
             }
             else {
-                setError(null);
+                setError(null); 
+                await props.authCb(true);
                 props.history.push({
                     pathname: '/thankYou',
                     state: { detail: response }
-                })
-
+                });
+               
             }
-            console.log(response)
+           
         }
         catch (e) {
+            // console.log("e", e)
             setError(e.message);
         }
     }
@@ -67,6 +60,7 @@ const Home = (props) => {
         }
         return false;
     }
+
     return (
         <Formik
             validationSchema={schemaYup(...userDetailsArr)}
@@ -82,8 +76,8 @@ const Home = (props) => {
 
                 return (
                     <MyForm onSubmit={handleSubmit}>
-
-                        {createFormData().map((item, key) => {
+                        {formData.map((item, key) => {
+                            item.name = userDetailsArr[key]
                             return (<Form.Group key={key}>
                                 <Form.Label>{item.label}</Form.Label>
                                 <Form.Control

@@ -1,11 +1,11 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import React,{useState} from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { Container, Row, Col, Image } from 'react-bootstrap';
-import ThankYou from './thankYou';
+import ThankYou from './thankYou/thankYou';
 import Home from './home';
 
 const App = () => {
-
+    const [auth,setAuth] = useState(false);
     return (
         <Container>
             <Row>
@@ -17,11 +17,12 @@ const App = () => {
                 <Col>
                     <Switch>
                         <Route exact path="/">
-                            <Home  />
+                            <Home authCb={setAuth} />
                         </Route>
-                        <Route exact path="/thankYou">
+                        {auth &&<Route exact path="/thankYou">
                             <ThankYou />
-                        </Route>
+                        </Route>}
+                        <Redirect to="/" />
                     </Switch>
                 </Col>
             </Row>

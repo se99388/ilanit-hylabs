@@ -16,18 +16,31 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    try{
-        // console.log(req.body)
-        await isValidate(req.body);
-        const response = await addUser(req.body);
+    try {
+        const userDetails = req.body;
+        //first option:
+        await isValidate(userDetails);
+
+        //second option:
+        // await isValidate(userDetails.firstName, userDetails.lastName, userDetails.email, userDetails.phone, userDetails.institute, userDetails.lab);
+
+        const response = await addUser(userDetails.firstName, userDetails.lastName, userDetails.email, userDetails.phone, userDetails.institute, userDetails.lab);
+
         res.json(response)
     }
-    catch(e){
-        res.json(e)
+    catch (e) {
+        console.log("I catch the error", e)
+        let errorMessage = { error: null };
+        if (e.name === 'ValidationError') {
+            errorMessage.error = e.message;
+        } if (e.name === 'error') {
+            errorMessage.error = e.detail.replace(/[\(\)]|Key/g, '').replace(/=/g, ' ');
+        }
+        res.json(errorMessage)
     }
-    
 
-    
+
+
 });
 
 export default router;
