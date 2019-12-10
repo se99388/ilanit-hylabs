@@ -1,6 +1,6 @@
 import express from 'express';
 import { getUsers, getUser, addUser } from '../../../db/users';
-import { isValidate } from '../../../src/utils/validationForm'
+import { isValidate } from '../../../src/utils/validation-form';
 
 const router = express.Router();
 
@@ -16,31 +16,25 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+    const userDetails = req.body;
+    const { firstName, lastName, email, phone, institute, lab } = userDetails;
+
     try {
-        const userDetails = req.body;
-        //first option:
         await isValidate(userDetails);
 
-        //second option:
-        // await isValidate(userDetails.firstName, userDetails.lastName, userDetails.email, userDetails.phone, userDetails.institute, userDetails.lab);
+        const response = await addUser(firstName, lastName, email, phone, institute, lab);
 
-        const response = await addUser(userDetails.firstName, userDetails.lastName, userDetails.email, userDetails.phone, userDetails.institute, userDetails.lab);
+        res.json(response);
+    } catch (e) {
+        let error = 'Server Error! please try again later';
 
-        res.json(response)
-    }
-    catch (e) {
-        console.log("I catch the error", e)
-        let errorMessage = { error: null };
         if (e.name === 'ValidationError') {
-            errorMessage.error = e.message;
-        } if (e.name === 'error') {
-            errorMessage.error = e.detail.replace(/[\(\)]|Key/g, '').replace(/=/g, ' ');
+            error = e.message;
+        } else if (e.constraint) {
+            error = `Email ${email} already exists`;
         }
-        res.json(errorMessage)
+        res.json({ error });
     }
-
-
-
 });
 
 export default router;

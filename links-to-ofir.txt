@@ -1,3 +1,8 @@
 React Router
 https://reacttraining.com/react-router/web/guides/quick-start
 
+Config create-react-app with external babel
+https://medium.com/@adostes/enabling-optional-chaining-in-a-create-react-app-a9f626a515d9
+
+html 5 history
+https://developer.mozilla.org/en-US/docs/Web/API/History_API

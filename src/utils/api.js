@@ -30,12 +30,10 @@ export const getInterests = () => {
     });
 };
 
-export const addUser = (value)=>{
-    // axios.post("/api/users", value)
-    //  .then(res => console.log(res.data));
+export const addUser = value => {
     return handler({
-        url:'/users',
-        method:'post',
+        url: '/users',
+        method: 'post',
         data: value
-    })
-}
+    });
+};

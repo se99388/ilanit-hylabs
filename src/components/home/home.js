@@ -3,180 +3,84 @@ import { Form, Button } from 'react-bootstrap';
 import { addUser } from '../../utils/api';
 import { MyForm, MyAlert } from './home.style';
 import { Formik } from 'formik';
-import userDetailsArr from '../../models/userDetails';
-import schemaYup from '../../utils/validationForm';
+import schemaYup from '../../utils/validation-form';
 import { withRouter } from 'react-router-dom';
+import useHTMLTitle from '../../hooks/use-html-title';
+import formData, { getInitialFormValues } from '../../utils/form-data';
 
+const Home = props => {
+    useHTMLTitle('HyLabs - Home');
 
-const Home = (props) => {
-    console.log(props)
     const [error, setError] = useState(null);
-    const createInitailVaules = () => {
-        return userDetailsArr.reduce((accum, currentVal) => {
-            accum[currentVal] = '';
-            return accum;
-        }, {})
-    }
 
-    const formData = [
-        { type: 'text', label: 'First name:', placeholder: "Enter first name" },
-        { type: 'text', label: 'Last name:', placeholder: "Enter last name" },
-        { type: 'text', label: 'Email:', placeholder: "Enter email" },
-        { type: 'text', label: 'Phone:', placeholder: "Enter phone No." },
-        { type: 'text', label: 'Institute/Company', placeholder: "Enter Institute/Company" },
-        { type: 'text', label: 'Lab', placeholder: "Enter lab" },
-    ]
-
-    const handleMySubmit = async (values) => {
+    const handleMySubmit = async values => {
         try {
             const response = await addUser(values);
-            console.log("response", response)
+            console.log('response', response);
             //validation error
             if (response.error) {
-                setError(response.error)
-            }
-            else {
-                setError(null); 
-                await props.authCb(true);
+                setError(response.error);
+            } else {
+                setError(null);
                 props.history.push({
-                    pathname: '/thankYou',
+                    pathname: '/thankyou',
                     state: { detail: response }
                 });
-               
             }
-           
-        }
-        catch (e) {
+        } catch (e) {
             // console.log("e", e)
             setError(e.message);
         }
-    }
+    };
 
-    const isValuesExist = (values) => {
+    const isValuesExist = values => {
         for (let key in values) {
             if (values[key] !== '') {
                 return true;
             }
         }
         return false;
-    }
+    };
 
     return (
         <Formik
-            validationSchema={schemaYup(...userDetailsArr)}
-            initialValues={createInitailVaules()}
+            validationSchema={schemaYup()}
+            initialValues={getInitialFormValues()}
             onSubmit={handleMySubmit}
         >
-            {({ handleSubmit,
-                errors,
-                touched,
-                values,
-                handleBlur,
-                handleChange }) => {
-
+            {({ handleSubmit, errors, touched, values, handleBlur, handleChange }) => {
                 return (
                     <MyForm onSubmit={handleSubmit}>
                         {formData.map((item, key) => {
-                            item.name = userDetailsArr[key]
-                            return (<Form.Group key={key}>
-                                <Form.Label>{item.label}</Form.Label>
-                                <Form.Control
-                                    type={item.type}
-                                    name={item.name}
-                                    placeholder={item.placeholder}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                />
-                                {(errors[item.name]) && touched[item.name] && <MyAlert variant='danger'>
-                                    {errors[item.name]}
-                                </MyAlert>}
-                            </Form.Group>
-                            )
+                            return (
+                                <Form.Group key={key}>
+                                    <Form.Label>{item.label}</Form.Label>
+                                    <Form.Control
+                                        type={item.type}
+                                        name={item.name}
+                                        placeholder={item.placeholder}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                    />
+                                    {errors[item.name] && touched[item.name] && (
+                                        <MyAlert variant="danger">{errors[item.name]}</MyAlert>
+                                    )}
+                                </Form.Group>
+                            );
                         })}
-                        {error && <MyAlert variant='danger'>
-                            {error}
-                        </MyAlert>}
-                        <Button variant="primary" type="submit"
-                            disabled={(!isValuesExist(values) || Object.keys(errors).length)}
+                        {error && <MyAlert variant="danger">{error}</MyAlert>}
+                        <Button
+                            variant="primary"
+                            type="submit"
+                            disabled={!isValuesExist(values) || Object.keys(errors).length}
                         >
                             Submit
-                            </Button>
+                        </Button>
                     </MyForm>
-                )
+                );
             }}
         </Formik>
     );
 };
 
 export default withRouter(Home);
-
-
-// const [users, setUsers] = useState([]);
-// const [interests, setInterests] = useState([]);
-
-// const clickTest = async () => {
-//     try {
-//         const users = await getUsers();
-//         setUsers(users);
-//     } catch (ex) {
-//         console.log('error with users');
-//     }
-// };
-
-// const clickTest2 = async () => {
-//     try {
-//         const interests = await getInterests();
-//         setInterests(interests);
-//     } catch (ex) { }
-// };
-
-/* {users.map(user => (
-                <UserBox key={user.id}>{`${user.first_name} ${user.last_name}`}</UserBox>
-            ))}
-            {interests.map(int => (
-                <UserBox key={int.id}>{int.name}</UserBox>
-            ))} */
-/* <Form.Group>
-                                <Form.Label>First name</Form.Label>
-                                <Form.Control type="text" name={FIRST_NAME} placeholder="Enter first name"
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                            {errors[FIRST_NAME] && <Alert variant='danger'>
-                                {errors[FIRST_NAME]}
-                            </Alert>}
-
-                            <Form.Group>
-                                <Form.Label>Last name</Form.Label>
-                                <Form.Control type="text" name={LAST_NAME} placeholder="Enter last name"
-                                    onChange={handleChange}
-                                />
-
-                            </Form.Group>
-                            <Form.Group >
-                                <Form.Label>Email address</Form.Label>
-                                <Form.Control type="email" placeholder="Enter email" name={EMAIL}
-                                    onChange={handleChange}
-                                />
-                                <Form.Text className="text-muted">
-                                    We'll never share your email with anyone else.
-                            </Form.Text>
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Phone No.</Form.Label>
-                                <Form.Control type="text" name={PHONE} placeholder="Enter phone number"
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Institute/Company</Form.Label>
-                                <Form.Control type="text" name={[INSTITUTE]} placeholder="Enter Institute/Company"
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Lab</Form.Label>
-                                <Form.Control type="text" name={LAB} placeholder="Enter lab"
-                                    onChange={handleChange}
-                                />
-                            </Form.Group> */
