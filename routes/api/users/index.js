@@ -1,6 +1,7 @@
 import express from 'express';
 import { getUsers, getUser, addUser } from '../../../db/users';
 import { isValidate } from '../../../src/utils/validation-form';
+import formData from '../../../src/utils/form-data';
 
 const router = express.Router();
 
@@ -17,17 +18,18 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const userDetails = req.body;
+    console.log(userDetails)
     const { firstName, lastName, email, phone, institute, lab } = userDetails;
 
     try {
-        await isValidate(userDetails);
+        await isValidate(userDetails, formData);
 
         const response = await addUser(firstName, lastName, email, phone, institute, lab);
 
         res.json(response);
     } catch (e) {
         let error = 'Server Error! please try again later';
-
+        console.log(e)
         if (e.name === 'ValidationError') {
             error = e.message;
         } else if (e.constraint) {

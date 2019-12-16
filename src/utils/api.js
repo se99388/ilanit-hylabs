@@ -37,3 +37,25 @@ export const addUser = value => {
         data: value
     });
 };
+
+export const tokenExample = (data, isSignup)=>{
+   let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyB43pcbc6rvUWBlh65vsnuxVvE4uNYhn7Q';
+    if (isSignup){
+        console.log('i am sign in ')
+        url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyB43pcbc6rvUWBlh65vsnuxVvE4uNYhn7Q'  
+    }
+    return handler({
+        baseURL: url,
+        method:'POST',
+        data: data
+    })
+}
+
+
+export const getOrdersSample = (token) => {
+console.log("token",token)
+    return handler({
+        baseURL: `https://react-my-burger-6e473.firebaseio.com/orders.json?auth=${token}`,
+        method: 'GET',
+    })
+}

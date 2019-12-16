@@ -1,4 +1,33 @@
 import * as yup from 'yup';
+import { getInterests } from '../utils/api';
+
+let allInt = []
+export const allData = async () => {
+   
+    try {
+        const interests =  await getInterests();
+        allInt = interests.map((item) => {
+            return (
+                {
+                    type: 'checkbox',
+                    label: item.name,
+                    name: item.name,
+                    id: item.id,
+                }
+            )
+        })
+        let interestsObj = { interests:[...allInt]}
+        // console.log([...formData,{ ...interestsObj}])
+        return [...formData, { ...interestsObj }];
+
+    }
+    catch (e){
+        throw e
+    }
+}
+
+
+
 
 const formData = [
     {
@@ -50,8 +79,27 @@ const formData = [
 
 export default formData;
 
-export const getInitialFormValues = () =>
-    formData.reduce((acc, curr) => {
+export const loginData = [
+    {
+        type: 'text',
+        label: 'Password:',
+        placeholder: 'Enter password',
+        name: 'password',
+        yup: yup.string().required('Write your password').min(3, 'Should be 3 characters at least')
+    },
+    {
+        type: 'text',
+        label: 'Email:',
+        placeholder: 'Enter email',
+        name: 'email',
+        yup: yup
+            .string()
+            .required('Write your email')
+            .email('wrong email')
+    }
+];
+export const getInitialFormValues = (data) =>
+    data.reduce((acc, curr) => {
         acc[curr.name] = '';
         return acc;
     }, {});
