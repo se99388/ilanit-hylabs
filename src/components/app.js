@@ -2,22 +2,26 @@ import React, { useState } from 'react';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import ThankYou from './thank-you';
-import Auth from './auth';
+//import Auth from './auth';
 import Lotto from './lotto';
-import LogOut from './auth/log-out'
+import LogOut from './auth/log-out';
 import Home from './home';
 
 const App = () => {
-    const [isAuth, setIsAuth] = useState(false)
+    const [isAuth, setIsAuth] = useState(false);
     return (
         <Container>
             <Row>
                 <Col>
                     <Image src="/images/hylabs-logo-s.png" />
                 </Col>
-                {isAuth && <Col>
-                    <Link to='./log-out'><h4>Log out</h4> </Link>
-                </Col>}
+                {isAuth && (
+                    <Col>
+                        <Link to="./log-out">
+                            <h4>Log out</h4>{' '}
+                        </Link>
+                    </Col>
+                )}
             </Row>
             <Row className="justify-content-center">
                 <Col>
@@ -25,9 +29,9 @@ const App = () => {
                         <Route exact path="/">
                             <Home />
                         </Route>
-                        <Route exact path="/auth">
+                        {/* <Route exact path="/auth">
                             <Auth />
-                        </Route>
+                        </Route> */}
                         <Route exact path="/thankyou">
                             <ThankYou />
                         </Route>
@@ -41,7 +45,7 @@ const App = () => {
                     </Switch>
                 </Col>
             </Row>
-        </Container >
+        </Container>
     );
 };
 
