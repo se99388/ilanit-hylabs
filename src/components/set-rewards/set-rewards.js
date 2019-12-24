@@ -3,10 +3,11 @@ import { getRewards, removeReward, updateReward, addReward } from '../../utils/a
 import { Button, Form, Table, Col } from 'react-bootstrap';
 import MyForm, { MyAlert } from '../my-form';
 import { rewardData } from './reward-data';
+import FormReward from './form-reward'
 
 const SetRewards = () => {
     const [rewards, setRewards] = useState([]);
-    const [rewardUpdateState, setRewardUpdateState] = useState(null);
+    const [rewardUpdateState, setRewardUpdateState] = useState([]);
     const [newRewardForm, setNewRewardForm] = useState([]);
     const [addRewardBtn, setAddRewardBtn] = useState('Add new reward');
     const [error, setError] = useState(null);
@@ -49,7 +50,7 @@ const SetRewards = () => {
     }
 
     const resetStates = () => {
-        setRewardUpdateState(null);
+        setRewardUpdateState([]);
         setNewRewardForm([]);
         setAddRewardBtn('Add new reward');
     }
@@ -73,14 +74,15 @@ const SetRewards = () => {
                 return []
             }
             else {
-                setAddRewardBtn('Cancel new reward')
-                return rewardData
+                setAddRewardBtn('Cancel new reward');
+                return rewardData;
             }
         })
     }
 
     const initalUpdateForm = (currentReward) => {
         //i'm not happy with this solution.
+        console.log(currentReward)
         const rewardArr = Object.entries(currentReward);
         console.log(rewardArr)
         const rewardDataWithValue = rewardData.map((item, index) => {
@@ -133,67 +135,22 @@ const SetRewards = () => {
                 </tbody>
             </Table >
 
+           
             <Button variant="dark" onClick={handleNewReward}>{addRewardBtn}</Button>
-            {newRewardForm.length ? <MyForm
+            {newRewardForm.length ? <FormReward 
                 formData={newRewardForm}
                 handleCurrentSubmit={handleSubmit}
-                submitText="Save new reward" exports
+                submitText="Save new reward"
                 error={error}
-                renderFormControls={(errors, touched, handleChange, handleBlur) => {
+            /> :null}
 
-                    const allFormData =
-                        <Form.Row>
-                            {newRewardForm.map((item, index) => (
-                                <Form.Group as={Col} sm="4" key={index} >
-                                    <Form.Label>{item.label}</Form.Label>
-
-                                    <Form.Control
-                                        type={item.type}
-                                        name={item.name}
-                                        placeholder={item.placeholder}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                    />
-                                    {errors[item.name] && touched[item.name] && (
-                                        <MyAlert variant="danger">{errors[item.name]}</MyAlert>
-                                    )}
-                                </Form.Group>
-                            ))}
-                        </Form.Row>
-                    return allFormData;
-                }}
-            /> : null}
-
-            {rewardUpdateState ? <MyForm
+            {rewardUpdateState.length ? <FormReward
                 formData={rewardUpdateState}
                 handleCurrentSubmit={handleSubmitUpdate}
-                submitText="Save updated reward" exports
+                submitText="Save updated reward"
                 error={error}
-                renderFormControls={(errors, touched, handleChange, handleBlur) => {
-
-                    const allFormData =
-                        <Form.Row>
-                            {rewardUpdateState.map((item, index) => (
-                                <Form.Group as={Col} sm="4" key={index} >
-                                    <Form.Label>{item.label}</Form.Label>
-
-                                    <Form.Control
-                                        type={item.type}
-                                        name={item.name}
-                                        defaultValue={item.value || ''}
-                                        placeholder={item.placeholder}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                    />
-                                    {errors[item.name] && touched[item.name] && (
-                                        <MyAlert variant="danger">{errors[item.name]}</MyAlert>
-                                    )}
-                                </Form.Group>
-                            ))}
-                        </Form.Row>
-                    return allFormData;
-                }}
             /> : null}
+
             {error && <MyAlert variant="danger">{error}</MyAlert>}
         </>
     )
