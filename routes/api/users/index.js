@@ -1,7 +1,7 @@
 import express from 'express';
 import { getUsers, getUser, addUser } from '../../../db/users';
 import { isValidate } from '../../../src/utils/validation-form';
-import formData from '../../../src/utils/form-data';
+import {formData} from '../../../src/components/home/form-data';
 
 const router = express.Router();
 
@@ -19,12 +19,12 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     const userDetails = req.body;
     console.log(userDetails)
-    const { firstName, lastName, email, phone, institute, lab } = userDetails;
+    const { firstName, lastName, email, phone, institute, lab, interests } = userDetails;
 
     try {
         await isValidate(userDetails, formData);
 
-        const response = await addUser(firstName, lastName, email, phone, institute, lab);
+        const response = await addUser(firstName, lastName, email, phone, institute, lab, interests);
 
         res.json(response);
     } catch (e) {

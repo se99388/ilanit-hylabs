@@ -38,6 +38,37 @@ export const addUser = value => {
     });
 };
 
+
+export const getRewards =()=>{
+   return handler({
+        url:'/rewards'
+    });
+}
+
+export const removeReward = (id) => {
+    return handler({
+        url: `/rewards/${id}`,
+        method: 'DELETE',
+        // params:id
+    })
+}
+
+export const updateReward = (reward) => {
+    return handler({
+        url: `/rewards/`,
+        method: 'PUT',
+        data:reward
+    })
+}
+
+export const addReward = (reward) => {
+    return handler({
+        url: `/rewards/`,
+        method: 'POST',
+        data: reward
+    })
+}
+
 export const tokenExample = (data, isSignup)=>{
    let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyB43pcbc6rvUWBlh65vsnuxVvE4uNYhn7Q';
     if (isSignup){

@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import ThankYou from './thank-you';
-//import Auth from './auth';
+import Auth from './auth';
 import Lotto from './lotto';
 import LogOut from './auth/log-out';
 import Home from './home';
+import SetRewards from './set-rewards';
 
 const App = () => {
     const [isAuth, setIsAuth] = useState(false);
@@ -29,14 +30,17 @@ const App = () => {
                         <Route exact path="/">
                             <Home />
                         </Route>
-                        {/* <Route exact path="/auth">
+                        <Route exact path="/auth">
                             <Auth />
-                        </Route> */}
+                        </Route>
                         <Route exact path="/thankyou">
-                            <ThankYou />
+                          <ThankYou />
                         </Route>
                         <Route exact path="/lotto">
                             <Lotto isAuth={setIsAuth} />
+                        </Route>
+                        <Route exact path="/set-rewards">
+                            <SetRewards />
                         </Route>
                         <Route exact path="/log-out">
                             <LogOut isAuth={setIsAuth} />

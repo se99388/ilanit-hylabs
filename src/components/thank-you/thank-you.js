@@ -11,6 +11,7 @@ const ThankYou = () => {
     const location = useLocation();
     const history = useHistory();
 
+
     useEffect(() => {
         const { first_name, last_name } = location.state?.detail || {};
         if (!first_name) {
@@ -22,6 +23,7 @@ const ThankYou = () => {
 
     return (
         <ContainerMessage>
+            <div id="test" style={{margin:'0 auto', width:'100%', border:'1px solid blue'}}></div>
             <h2>
                 Thank you {fullName.first_name} {fullName.last_name} for your participation in
                 hylabs lotto
