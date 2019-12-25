@@ -14,6 +14,7 @@ const SetRewards = () => {
     const [idReward, setIdReward] = useState({ id: null })
 
     const allRewards = async () => {
+        console.log("start", rewardData)
         try {
             const responseRewards = await getRewards();
             console.log("responseRewards", responseRewards)
@@ -75,6 +76,7 @@ const SetRewards = () => {
             }
             else {
                 setAddRewardBtn('Cancel new reward');
+                console.log("handleNewReward", rewardData)
                 return rewardData;
             }
         })
@@ -82,13 +84,14 @@ const SetRewards = () => {
 
     const initalUpdateForm = (currentReward) => {
         //i'm not happy with this solution.
-        console.log(currentReward)
-        const rewardArr = Object.entries(currentReward);
-        console.log(rewardArr)
-        const rewardDataWithValue = rewardData.map((item, index) => {
-            item.value = rewardArr[index + 1][1]
+        const rewardArr = Object.values(currentReward);
+        let rewardDataWithValue = rewardData.map(obj => ({ ...obj }));
+        
+         rewardDataWithValue = rewardDataWithValue.map((item, index) => {
+            item.value = rewardArr[index + 1]
             return item;
         })
+      
         setRewardUpdateState(rewardDataWithValue);
         setIdReward({ id: currentReward.id });
     }
@@ -115,7 +118,7 @@ const SetRewards = () => {
                     </td>
                 )}
                 <td >
-                    <Button variant="success" onClick={() => initalUpdateForm(reward)}>Update</Button>
+                    <Button disabled={newRewardForm.length} variant="success" onClick={() => initalUpdateForm(reward)}>Update</Button>
                 </td>
                 <td >
                     <Button variant="danger" onClick={() => handleRemoveReward(reward.id)}>Remove</Button>
@@ -136,7 +139,8 @@ const SetRewards = () => {
             </Table >
 
            
-            <Button variant="dark" onClick={handleNewReward}>{addRewardBtn}</Button>
+            <Button disabled={rewardUpdateState.length} variant="dark" onClick={handleNewReward}>{addRewardBtn}</Button>
+
             {newRewardForm.length ? <FormReward 
                 formData={newRewardForm}
                 handleCurrentSubmit={handleSubmit}
