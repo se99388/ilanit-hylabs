@@ -9,14 +9,14 @@ export const getRewards = () => {
     FROM rewards
     ORDER BY id ASC
     `;
-    return getRows(sql)
-}
+    return getRows(sql);
+};
 
-export const removeReward = (id) => {
+export const removeReward = id => {
     const sql = `DELETE FROM rewards
                 WHERE id = $1 RETURNING *`;
-    return getRow(sql, id)
-}
+    return getRow(sql, id);
+};
 
 export const updateReward = (id, reward, quantity, image) => {
     const sql = `UPDATE rewards
@@ -24,8 +24,8 @@ export const updateReward = (id, reward, quantity, image) => {
                     quantity = $3,
                     image = $4
                 WHERE id = $1 RETURNING *`;
-    return getRow(sql, id, reward, quantity, image)
-}
+    return getRow(sql, id, reward, quantity, image);
+};
 
 export const addReward = (reward, quantity, image) => {
     const sql = `INSERT INTO rewards 
@@ -36,4 +36,3 @@ export const addReward = (reward, quantity, image) => {
     ($1, $2, $3) RETURNING *`;
     return getRow(sql, reward, quantity, image);
 };
-

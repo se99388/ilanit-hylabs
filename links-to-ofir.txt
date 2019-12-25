@@ -6,3 +6,13 @@ https://medium.com/@adostes/enabling-optional-chaining-in-a-create-react-app-a9f
 
 html 5 history
 https://developer.mozilla.org/en-US/docs/Web/API/History_API
+
+
+cookies javascript base
+https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie
+
+js cookie lib
+https://github.com/js-cookie/js-cookie
+
+express session
+https://github.com/expressjs/session#readme
