@@ -30,10 +30,17 @@ const SetRewards = () => {
 
     const handleSubmit = async (state) => {
         try {
-            await addReward(state);
-            resetStates();
-            allRewards();
-        } catch (e) {
+            const response = await addReward(state);
+            if (response.error) {
+                setError(response.error)
+            }
+            else {
+                setError(null);
+                resetStates();
+                allRewards();
+            }
+
+        }catch (e) {
             setError(e.message)
         }
 
@@ -41,11 +48,18 @@ const SetRewards = () => {
     const handleSubmitUpdate = async (state) => {
         try {
             state.id = idReward.id;
-            console.log(state)
-            await updateReward(state);
-            resetStates();
-            allRewards();
+            const response = await updateReward(state);
+            if (response.error){
+                setError(response.error)
+            }
+            else{
+                setError(null);
+                resetStates();
+                allRewards();
+            }
+            
         } catch (e) {
+            console.log(e)
             setError(e.message)
         }
     }
@@ -53,8 +67,10 @@ const SetRewards = () => {
     const resetStates = () => {
         setRewardUpdateState([]);
         setNewRewardForm([]);
+        setError(null);
         setAddRewardBtn('Add new reward');
     }
+
     const handleRemoveReward = async (id) => {
         try {
             await removeReward(id);
@@ -63,20 +79,18 @@ const SetRewards = () => {
         } catch (e) {
             setError(e.message)
         }
-
-
     }
 
 
     const handleNewReward = () => {
         setNewRewardForm((prevState) => {
             if (prevState.length) {
-                setAddRewardBtn('Add new reward')
-                return []
+                resetStates()
+                // setAddRewardBtn('Add new reward');
+                // return []
             }
             else {
                 setAddRewardBtn('Cancel new reward');
-                console.log("handleNewReward", rewardData)
                 return rewardData;
             }
         })
@@ -155,7 +169,7 @@ const SetRewards = () => {
                 error={error}
             /> : null}
 
-            {error && <MyAlert variant="danger">{error}</MyAlert>}
+            {(!rewardUpdateState.length && !newRewardForm.length) && (error && <MyAlert variant="danger">{error}</MyAlert>)}
         </>
     )
 }

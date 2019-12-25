@@ -17,14 +17,14 @@ export const rewardData = [
         yup: yup.string().required('Write your reward')
     },
     {
-        type: 'text',
+        type: 'number',
         label: 'Quantity',
         placeholder: 'Enter quantity',
         name: 'quantity',
         value: '',
         yup: yup
             .number('Has to be a number')
-            .min(0,'Has to be 0 at least')
+            .min(1,'Has to be more than 0')
             .required('Write your quantity')
     },
     {

@@ -1,4 +1,6 @@
 import { getRewards, removeReward, updateReward, addReward } from '../../../db/rewards';
+import { isValidate } from '../../../src/utils/validation-form';
+import {rewardData} from '../../../src/components/set-rewards/reward-data';
 import express from 'express';
 
 const router = express.Router();
@@ -15,7 +17,6 @@ router.get("/", async (req, res) => {
 });
 
 router.delete("/:id", async (req, res) => {
-
     const deleteRow = await removeReward(req.params.id);
     console.log(deleteRow)
     res.json(deleteRow).status(204);
@@ -24,6 +25,7 @@ router.delete("/:id", async (req, res) => {
 router.put("/", async (req, res) => {
     try {
         const { id, reward, quantity, image } = req.body;
+        await isValidate({ reward, quantity, image },rewardData);
         const responseReward = await updateReward(id, reward, quantity, image)
         console.log(responseReward);
         res.json(req.body);
@@ -42,6 +44,7 @@ router.put("/", async (req, res) => {
 router.post("/", async (req, res) => {
     try {
         const { reward, quantity, image } = req.body;
+        await isValidate({ reward, quantity, image }, rewardData);
         const newReward = await addReward(reward, quantity, image);
         res.json(newReward);
     } catch (e) {
@@ -53,6 +56,4 @@ router.post("/", async (req, res) => {
         res.json({ error });
     }
 });
-
-
 export default router;

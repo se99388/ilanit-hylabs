@@ -22,7 +22,7 @@ const MyForm = ({ formData, handleCurrentSubmit, submitText, error, renderFormCo
                         <Button
                             variant="primary"
                             type="submit"
-                            disabled={!isValuesExist(values) || Object.keys(errors).length}
+                            // disabled={!isValuesExist(values) || Object.keys(errors).length}
                         >
                             {submitText}
                         </Button>

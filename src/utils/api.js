@@ -39,9 +39,9 @@ export const addUser = value => {
 };
 
 
-export const getRewards =()=>{
-   return handler({
-        url:'/rewards'
+export const getRewards = () => {
+    return handler({
+        url: '/rewards'
     });
 }
 
@@ -54,11 +54,11 @@ export const removeReward = (id) => {
 }
 
 export const updateReward = (reward) => {
-    return handler({
-        url: `/rewards/`,
-        method: 'PUT',
-        data:reward
-    })
+        return handler({
+            url: `/rewards/`,
+            method: 'PUT',
+            data: reward
+        });
 }
 
 export const addReward = (reward) => {
@@ -69,24 +69,32 @@ export const addReward = (reward) => {
     })
 }
 
-export const tokenExample = (data, isSignup)=>{
-   let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyB43pcbc6rvUWBlh65vsnuxVvE4uNYhn7Q';
-    if (isSignup){
-        console.log('i am sign in ')
-        url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyB43pcbc6rvUWBlh65vsnuxVvE4uNYhn7Q'  
-    }
+export const sendAuth = (userDetails) => {
     return handler({
-        baseURL: url,
+        url:`/auth/`,
         method:'POST',
-        data: data
+        data: userDetails
     })
 }
 
+// export const tokenExample = (data, isSignup)=>{
+//    let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyB43pcbc6rvUWBlh65vsnuxVvE4uNYhn7Q';
+//     if (isSignup){
+//         console.log('i am sign in ')
+//         url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyB43pcbc6rvUWBlh65vsnuxVvE4uNYhn7Q'  
+//     }
+//     return handler({
+//         baseURL: url,
+//         method:'POST',
+//         data: data
+//     })
+// }
 
-export const getOrdersSample = (token) => {
-console.log("token",token)
-    return handler({
-        baseURL: `https://react-my-burger-6e473.firebaseio.com/orders.json?auth=${token}`,
-        method: 'GET',
-    })
-}
+
+// export const getOrdersSample = (token) => {
+// console.log("token",token)
+//     return handler({
+//         baseURL: `https://react-my-burger-6e473.firebaseio.com/orders.json?auth=${token}`,
+//         method: 'GET',
+//     })
+// }

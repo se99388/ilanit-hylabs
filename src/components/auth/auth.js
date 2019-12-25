@@ -3,6 +3,7 @@ import MyForm, { MyAlert } from '../my-form';
 import { Form } from 'react-bootstrap';
 import { authData } from './auth-data';
 import useTitle from '../../hooks/use-html-title';
+import {sendAuth} from '../../utils/api'
 
 
 
@@ -12,8 +13,9 @@ const Auth = () => {
     const [error, setError] = useState(null);
 
 
-    const handleMySubmit = async (e) => {
-        console.log(e)
+    const handleMySubmit = async (userDetails) => {
+        console.log(userDetails)
+        sendAuth(userDetails)
     }
 
     return (
