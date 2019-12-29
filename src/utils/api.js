@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: '/api',
+    baseURL: '/',
     timeout: 5000,
     method: 'get',
     headers: { 'Content-Type': 'application/json' }
@@ -20,81 +20,58 @@ const handler = async options => {
 
 export const getUsers = () => {
     return handler({
-        url: '/users'
+        url: '/api/users'
     });
 };
 
 export const getInterests = () => {
     return handler({
-        url: '/interests'
+        url: '/api/interests'
     });
 };
 
 export const addUser = value => {
     return handler({
-        url: '/users',
+        url: '/api/users',
         method: 'post',
         data: value
     });
 };
 
-
 export const getRewards = () => {
     return handler({
-        url: '/rewards'
+        url: '/api/rewards'
     });
-}
+};
 
-export const removeReward = (id) => {
+export const removeReward = id => {
     return handler({
-        url: `/rewards/${id}`,
-        method: 'DELETE',
+        url: `/api/rewards/${id}`,
+        method: 'DELETE'
         // params:id
-    })
-}
+    });
+};
 
-export const updateReward = (reward) => {
-        return handler({
-            url: `/rewards/`,
-            method: 'PUT',
-            data: reward
-        });
-}
-
-export const addReward = (reward) => {
+export const updateReward = reward => {
     return handler({
-        url: `/rewards/`,
+        url: `/api/rewards/`,
+        method: 'PUT',
+        data: reward
+    });
+};
+
+export const addReward = reward => {
+    return handler({
+        url: `/api/rewards/`,
         method: 'POST',
         data: reward
-    })
-}
+    });
+};
 
-export const sendAuth = (userDetails) => {
+export const login = (email, password) => {
     return handler({
-        url:`/auth/`,
-        method:'POST',
-        data: userDetails
-    })
-}
-
-// export const tokenExample = (data, isSignup)=>{
-//    let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyB43pcbc6rvUWBlh65vsnuxVvE4uNYhn7Q';
-//     if (isSignup){
-//         console.log('i am sign in ')
-//         url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyB43pcbc6rvUWBlh65vsnuxVvE4uNYhn7Q'  
-//     }
-//     return handler({
-//         baseURL: url,
-//         method:'POST',
-//         data: data
-//     })
-// }
-
-
-// export const getOrdersSample = (token) => {
-// console.log("token",token)
-//     return handler({
-//         baseURL: `https://react-my-burger-6e473.firebaseio.com/orders.json?auth=${token}`,
-//         method: 'GET',
-//     })
-// }
+        url: '/auth/login',
+        method: 'POST',
+        data: { email, password }
+    });
+};

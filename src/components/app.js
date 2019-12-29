@@ -1,28 +1,21 @@
 import React, { useState } from 'react';
-import { Switch, Route, Redirect, Link } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import ThankYou from './thank-you';
-import Auth from './auth';
 import Lotto from './lotto';
-import LogOut from './auth/log-out';
 import Home from './home';
-import SetRewards from './set-rewards';
+import Login from './login';
+import Admin from './admin';
 
 const App = () => {
     const [isAuth, setIsAuth] = useState(false);
+
     return (
         <Container>
             <Row>
                 <Col>
                     <Image src="/images/hylabs-logo-s.png" />
                 </Col>
-                {isAuth && (
-                    <Col>
-                        <Link to="./log-out">
-                            <h4>Log out</h4>{' '}
-                        </Link>
-                    </Col>
-                )}
             </Row>
             <Row className="justify-content-center">
                 <Col>
@@ -30,22 +23,26 @@ const App = () => {
                         <Route exact path="/">
                             <Home />
                         </Route>
-                        <Route exact path="/auth">
-                            <Auth />
-                        </Route>
                         <Route exact path="/thankyou">
-                          <ThankYou />
+                            <ThankYou />
                         </Route>
                         <Route exact path="/lotto">
-                            <Lotto isAuth={setIsAuth} />
+                            <Lotto />
                         </Route>
-                        <Route exact path="/set-rewards">
-                            <SetRewards />
+                        <Route exact path="/login">
+                            <Login setIsAuth={setIsAuth} />
                         </Route>
-                        <Route exact path="/log-out">
-                            <LogOut isAuth={setIsAuth} />
-                        </Route>
-                        <Redirect to="/" />
+                        <Route
+                            exact
+                            path="/admin"
+                            render={props => {
+                                if (isAuth) {
+                                    return <Admin />;
+                                } else {
+                                    return <Redirect to="/login" />;
+                                }
+                            }}
+                        />
                     </Switch>
                 </Col>
             </Row>
