@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import ThankYou from './thank-you';
@@ -6,10 +6,11 @@ import Lotto from './lotto';
 import Home from './home';
 import Login from './login';
 import Admin from './admin';
+import Cookies from 'js-cookie';
+
+const isAuth = () => !!Cookies.get('isa');
 
 const App = () => {
-    const [isAuth, setIsAuth] = useState(false);
-
     return (
         <Container>
             <Row>
@@ -30,13 +31,13 @@ const App = () => {
                             <Lotto />
                         </Route>
                         <Route exact path="/login">
-                            <Login setIsAuth={setIsAuth} />
+                            <Login />
                         </Route>
                         <Route
                             exact
                             path="/admin"
                             render={props => {
-                                if (isAuth) {
+                                if (isAuth()) {
                                     return <Admin />;
                                 } else {
                                     return <Redirect to="/login" />;

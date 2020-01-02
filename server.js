@@ -1,12 +1,14 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import routes from './routes';
 import session from 'express-session';
+import routes from './routes';
 
 const app = express();
 
+//app.use(express.static('build'));
+
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(express.json()); // every post request with content-type "application/json" creates an object under req.body that holds all the request information
 app.use(cookieParser());
 
 // this middleware create a session object to each request:
@@ -21,7 +23,7 @@ app.use(cookieParser());
 // so lets take our example since we save to each user (after login or whatever) the key userName
 // so the server will create some object in memory something like that:
 //  {
-//      "afsarfq3fwf": { userName: 'adidi'},
+//      "afsarfq3fwf": { userName: 'adidi', id: 112, password: 12344},
 //      "asfaqwf32f3": { userName: 'ofir'},
 //      "dsafsdaqw": { userName: 'danny'},
 //      "asf3sdgfsegt": { userName: 'lizet'}
@@ -42,6 +44,9 @@ app.use(
         saveUninitialized: true
     })
 );
+
+// 1. in every request to the server by any user it will create a cookie named connect.sid
+// 2. he pusts under req object session which can read and write values from the user cookie
 
 app.use(routes);
 

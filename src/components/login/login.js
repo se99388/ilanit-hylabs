@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import { login } from '../../utils/api';
 import { useHistory } from 'react-router-dom';
 
-const Login = ({ setIsAuth }) => {
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const history = useHistory();
@@ -37,7 +37,6 @@ const Login = ({ setIsAuth }) => {
                     e.preventDefault();
                     const res = await login(email, password);
                     if (res.success) {
-                        setIsAuth(true);
                         history.push('/admin');
                     } else {
                         alert('No');
