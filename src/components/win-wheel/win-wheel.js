@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 // import './main.css'
 import { ColwheelBack, Canvas, MyButton } from './win-wheel.style';
-import { sendEmail } from '../../utils/api';
+import { sendEmail, updateRewardUser } from '../../utils/api';
 import {initalWheelData} from './win-wheel-data'
 
 const COLORS = ['#f6989d', ' #a186be', '#00aef0', '#f26522', 'yellow', '#e70697', '#fff200', '#ee1c24', '#3cb878']
 
 
-const WinWheel = ({ initalRewards }) => {
+const WinWheel = ({ initalRewards, alertPrize }) => {
     let theWheel;
     const [displayWheelBtn, setDisplayWheelBtn] = useState(true);
   
@@ -55,21 +55,22 @@ const WinWheel = ({ initalRewards }) => {
     // Called when the spin animation has finished by the callback feature of the wheel because I specified callback in the parameters.
     // note the indicated segment is passed in as a parmeter as 99% of the time you will want to know this to inform the user of their prize.
     // -------------------------------------------------------
-    async function alertPrize(indicatedSegment) {
-        // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
+    // async function alertPrize(indicatedSegment) {
+    //     // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
 
-        const rewardObject = initalRewards.find(reward => reward.reward === indicatedSegment.text);
-        rewardObject.quantity-=1
-        const emailDetails = {
-            email: 'houbara0@gmail.com', 
-            title: 'You won - in hylabs lotto', 
-            message: `You won in ${indicatedSegment.text}.\r\n we are waiting you in hylabs booth.`,
-            reward: rewardObject
-        }
-        alert('You won in:' + indicatedSegment.text );
-        const response = await sendEmail(emailDetails)
-        console.log(response)
-    }
+    //     const rewardObject = initalRewards.find(reward => reward.reward === indicatedSegment.text);
+    //     rewardObject.quantity-=1
+    //     const emailDetails = {
+    //         email: emailUser || 'houbara0@gmail.com', 
+    //         title: 'You won - in hylabs lotto', 
+    //         message: `You won in ${indicatedSegment.text}.\r\n we are waiting you in hylabs booth.`,
+    //         reward: rewardObject
+    //     }
+    //     alert('You won in:' + indicatedSegment.text );
+    //     const responseUser = await updateRewardUser(userId, indicatedSegment.text)
+    //     const response = await sendEmail(emailDetails);
+    //     console.log(response, responseUser)
+    // }
 
    
 

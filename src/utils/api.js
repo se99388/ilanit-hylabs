@@ -24,6 +24,12 @@ export const getUsers = () => {
     });
 };
 
+export const getUserById = (id) => {
+    return handler({
+        url: `/api/users/${id}`,
+        method: 'GET'
+    });
+};
 export const getInterests = () => {
     return handler({
         url: '/api/interests'
@@ -35,6 +41,14 @@ export const addUser = value => {
         url: '/api/users',
         method: 'post',
         data: value
+    });
+};
+
+export const updateRewardUser = (id, reward) => {
+    return handler({
+        url: `/api/users/`,
+        method: 'PUT',
+        data: { id, reward}
     });
 };
 

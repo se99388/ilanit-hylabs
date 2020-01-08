@@ -5,6 +5,13 @@ import express from 'express';
 
 const router = express.Router();
 
+const protect = (req, res, next) => {
+    if (!req.session.isAuth) {
+        return res.status(500).json({ authorize: false });
+    }
+
+    next();
+};
 router.get("/", async (req, res) => {
     try {
         const rewards = await getRewards();
@@ -16,13 +23,13 @@ router.get("/", async (req, res) => {
 
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", protect, async (req, res) => {
     const deleteRow = await removeReward(req.params.id);
     console.log(deleteRow)
     res.json(deleteRow).status(204);
 });
 
-router.put("/", async (req, res) => {
+router.put("/", protect, async (req, res) => {
     try {
         
         const { id, reward, quantity, image, size } = req.body;
@@ -42,7 +49,7 @@ router.put("/", async (req, res) => {
 
 });
 
-router.post("/", async (req, res) => {
+router.post("/", protect, async (req, res) => {
     try {
         const { reward, quantity, image, size } = req.body;
         await isValidate({ reward, quantity, image, size }, rewardData);

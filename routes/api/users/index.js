@@ -1,5 +1,5 @@
 import express from 'express';
-import { getUsers, getUser, addUser } from '../../../db/users';
+import { getUsers, getUser, addUser, updateRewardUser } from '../../../db/users';
 import { isValidate } from '../../../src/utils/validation-form';
 import {formData} from '../../../src/components/home/form-data';
 
@@ -37,6 +37,26 @@ router.post('/', async (req, res) => {
         }
         res.json({ error });
     }
+});
+
+router.put("/", async (req, res) => {
+    try {
+        console.log("req.body: ", req.body)
+        const { id, reward} = req.body;
+        // await isValidate({ reward, quantity, image, size }, rewardData);
+        const responseReward = await updateRewardUser(id, reward)
+        console.log(responseReward);
+        res.json(responseReward);
+
+    } catch (e) {
+        let error = 'Server Error! please try again later';
+        console.log(e)
+        if (e.name === 'ValidationError') {
+            error = e.message;
+        }
+        res.json({ error });
+    }
+
 });
 
 export default router;

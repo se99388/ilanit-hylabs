@@ -35,3 +35,10 @@ export const addUser = (firstName, lastName, email, phone, institute, lab, inter
     ($1,$2, $3,$4, $5, $6, $7) RETURNING *`;
     return getRow(sql, firstName, lastName, email, phone, institute, lab, interests);
 };
+
+export const updateRewardUser = (id, reward) => {
+    const sql = `UPDATE users
+                SET reward = $2
+                WHERE id = $1 RETURNING *`;
+    return getRow(sql, id, reward);
+};
