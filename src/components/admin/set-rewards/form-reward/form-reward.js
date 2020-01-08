@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Form, Col } from 'react-bootstrap';
-import MyForm, { MyAlert } from '../../my-form';
+import MyForm, { MyAlert } from '../../../my-form';
 
 const FormReward = ({ formData,
     handleCurrentSubmit,

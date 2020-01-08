@@ -32,6 +32,16 @@ export const rewardData = [
         label: 'Image:',
         placeholder: 'Enter image source',
         name: 'image',
+        value: 'hylabs-logo-s.png',
+        yup: yup
+            .string()
+            .required('Has contain image name. The default is: hylabs-logo-s.png')
+    },
+    {
+        type: 'number',
+        label: "wheel's segment size (optional)",
+        placeholder: 'Enter segment size',
+        name: 'size',
         value: ''
     }
 ];

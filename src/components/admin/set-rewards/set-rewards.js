@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { getRewards, removeReward, updateReward, addReward } from '../../utils/api';
+import { getRewards, removeReward, updateReward, addReward } from '../../../utils/api';
 import { Button, Form, Table, Col } from 'react-bootstrap';
-import MyForm, { MyAlert } from '../my-form';
+import MyForm, { MyAlert } from '../../my-form';
 import { rewardData } from './reward-data';
-import FormReward from './form-reward'
+import FormReward from './form-reward';
+import WinWheel from '../../win-wheel';
 
 const SetRewards = () => {
     const [rewards, setRewards] = useState([]);
@@ -30,6 +31,7 @@ const SetRewards = () => {
 
     const handleSubmit = async (state) => {
         try {
+            state.size = state.size || null;
             const response = await addReward(state);
             if (response.error) {
                 setError(response.error)
@@ -48,6 +50,7 @@ const SetRewards = () => {
     const handleSubmitUpdate = async (state) => {
         try {
             state.id = idReward.id;
+            state.size = state.size || null;
             const response = await updateReward(state);
             if (response.error){
                 setError(response.error)
@@ -170,6 +173,8 @@ const SetRewards = () => {
             /> : null}
 
             {(!rewardUpdateState.length && !newRewardForm.length) && (error && <MyAlert variant="danger">{error}</MyAlert>)}
+
+            <WinWheel initalRewards={rewards} />
         </>
     )
 }

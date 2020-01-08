@@ -5,7 +5,8 @@ export const getRewards = () => {
     id,
     reward,
     quantity,
-    image
+    image,
+    size
     FROM rewards
     ORDER BY id ASC
     `;
@@ -18,21 +19,24 @@ export const removeReward = id => {
     return getRow(sql, id);
 };
 
-export const updateReward = (id, reward, quantity, image) => {
+export const updateReward = (id, reward, quantity, image, size) => {
     const sql = `UPDATE rewards
                     SET reward = $2,
                     quantity = $3,
-                    image = $4
+                    image = $4,
+                    size = $5
                 WHERE id = $1 RETURNING *`;
-    return getRow(sql, id, reward, quantity, image);
+    return getRow(sql, id, reward, quantity, image, size);
 };
 
-export const addReward = (reward, quantity, image) => {
+export const addReward = (reward, quantity, image, size) => {
+    console.log("ofir", reward, quantity, image, size)
     const sql = `INSERT INTO rewards 
     (reward,
     quantity,
-    image)
+    image,
+    size)
     VALUES
-    ($1, $2, $3) RETURNING *`;
-    return getRow(sql, reward, quantity, image);
+    ($1, $2, $3, $4) RETURNING *`;
+    return getRow(sql, reward, quantity, image, size);
 };

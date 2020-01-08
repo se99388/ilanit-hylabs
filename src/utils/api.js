@@ -75,3 +75,18 @@ export const login = (email, password) => {
         data: { email, password }
     });
 };
+
+export const logout = ()=>{
+    return handler({
+        url: 'auth/logout',
+        method: 'GET'
+    })
+}
+
+export const sendEmail = (emailWinMessage)=>{
+    return handler({
+        url:'api/send-email',
+        method:'POST',
+        data: emailWinMessage
+    })
+}

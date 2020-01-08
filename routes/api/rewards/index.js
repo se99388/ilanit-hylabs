@@ -1,6 +1,6 @@
 import { getRewards, removeReward, updateReward, addReward } from '../../../db/rewards';
 import { isValidate } from '../../../src/utils/validation-form';
-import {rewardData} from '../../../src/components/set-rewards/reward-data';
+import {rewardData} from '../../../src/components/admin/set-rewards/reward-data';
 import express from 'express';
 
 const router = express.Router();
@@ -24,9 +24,10 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/", async (req, res) => {
     try {
-        const { id, reward, quantity, image } = req.body;
-        await isValidate({ reward, quantity, image },rewardData);
-        const responseReward = await updateReward(id, reward, quantity, image)
+        
+        const { id, reward, quantity, image, size } = req.body;
+        await isValidate({ reward, quantity, image, size },rewardData);
+        const responseReward = await updateReward(id, reward, quantity, image, size)
         console.log(responseReward);
         res.json(req.body);
 
@@ -43,9 +44,9 @@ router.put("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        const { reward, quantity, image } = req.body;
-        await isValidate({ reward, quantity, image }, rewardData);
-        const newReward = await addReward(reward, quantity, image);
+        const { reward, quantity, image, size } = req.body;
+        await isValidate({ reward, quantity, image, size }, rewardData);
+        const newReward = await addReward(reward, quantity, image, size);
         res.json(newReward);
     } catch (e) {
         let error = 'Server Error! please try again later';
