@@ -24,24 +24,25 @@ export const rewardData = [
         value: '',
         yup: yup
             .number('Has to be a number')
-            .min(1,'Has to be more than 0')
+            .min(0,'Has to be 0 or more')
             .required('Write your quantity')
     },
-    {
-        type: 'text',
-        label: 'Image:',
-        placeholder: 'Enter image source',
-        name: 'image',
-        value: 'hylabs-logo-s.png',
-        yup: yup
-            .string()
-            .required('Has contain image name. The default is: hylabs-logo-s.png')
-    },
+    // {
+    //     type: 'text',
+    //     label: 'Image:',
+    //     placeholder: 'Enter image source',
+    //     name: 'image',
+    //     value: 'hylabs-logo-s.png',
+    //     yup: yup
+    //         .string()
+    //         .required('Has contain image name. The default is: hylabs-logo-s.png')
+    // },
     {
         type: 'number',
         label: "wheel's segment size (optional)",
         placeholder: 'Enter segment size',
         name: 'size',
-        value: ''
+        value:'',
+
     }
 ];

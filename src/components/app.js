@@ -6,13 +6,14 @@ import Lotto from './lotto';
 import Home from './home';
 import Login from './login';
 import Admin from './admin';
+import HylabsJobs from './hylabs-jobs'
 import Cookies from 'js-cookie';
 
 const isAuth = () => !!Cookies.get('isa');
 
 const App = () => {
     return (
-        <Container>
+        <Container fluid={false}>
             <Row>
                 <Col>
                     <Image src="/images/hylabs-logo-s.png" />
@@ -32,6 +33,9 @@ const App = () => {
                         </Route>
                         <Route exact path="/login">
                             <Login />
+                        </Route>
+                        <Route exact path="/hylabs-jobs">
+                            <HylabsJobs />
                         </Route>
                         <Route
                             exact

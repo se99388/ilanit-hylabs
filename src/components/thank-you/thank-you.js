@@ -3,8 +3,11 @@ import { ContainerMessage } from './thank-you.style';
 import { useLocation, useHistory, Link } from 'react-router-dom';
 import useHTMLTitle from '../../hooks/use-html-title';
 import { getRewards, getUserById, updateRewardUser, sendEmail } from '../../utils/api';
-import { Button, Alert } from 'react-bootstrap';
+import { Button, Alert, Container, Row, Col } from 'react-bootstrap';
 import WinWheel from '../win-wheel';
+import RewardImages from '../win-wheel/rewards-images';
+import Modal from '../UI/modal';
+import Backdrop from '../UI/backdrop';
 
 const ThankYou = () => {
     useHTMLTitle('HyLabs - Thank You');
@@ -14,47 +17,44 @@ const ThankYou = () => {
     const [userID, setUserID] = useState({});
     const [rewards, setRewards] = useState([]);
     const [isWon, setIsWon] = useState(false);
+    const [showModal, setShowModal] = useState(false)
+    const [rewardWinMsg, setRewardWinMsg] = useState({
+        msg: '',
+        img: []
+    })
     const [error, setError] = useState(null);
     const location = useLocation();
     const history = useHistory();
 
 
-    useEffect(() => {
-        allRewards()
-        return () => {
-            allRewards()
-        }
-    }, []);
     const isUserAlreadyWon = async (id) => {
         const userDetails = await getUserById(id);
         console.log("userDetails", userDetails)
         if (userDetails.reward) {
-            setIsWon(true);
+            return true;
         } else {
-            setIsWon(false);
+            return false;
         }
     }
     useEffect(() => {
-        const { first_name, last_name, email, id } = location.state ?.detail || {};
-        if (!first_name) {
-            history.replace('/');
-        } else {
-            isUserAlreadyWon(id)
-            console.log(isWon)
-            if (isWon) {
+        (async () => {
+            const { first_name, last_name, email, id } = location.state ?.detail || {};
+            if (!first_name) {
                 history.replace('/');
-                console.log("yes - isWon")
+                //should remove it later
+                // allRewards();
+            } else {
+                if (await isUserAlreadyWon(id)) {
+                    history.replace('/');
+                } else {
+                    allRewards();
+                    setFullName({ first_name, last_name });
+                    setEmailUser(email);
+                    setUserID(id);
+                }
             }
-            else {
-                console.log("no - isWon")
-                setFullName({ first_name, last_name });
-                setEmailUser(email);
-                setUserID(id);
-            }
-        }
-        return () => {
-            isUserAlreadyWon(id)
-        }
+        })();
+
     }, [history, location.state, isWon]);
 
     const allRewards = async () => {
@@ -74,34 +74,57 @@ const ThankYou = () => {
         rewardObject.quantity -= 1
         const emailDetails = {
             email: emailUser || 'houbara0@gmail.com',
-            title: 'You won - in hylabs lotto',
-            message: `You won in ${indicatedSegment.text}.\r\n we are waiting you in hylabs booth.`,
+            title: 'Welcome to hylabs booth',
+            message: `Congratulations! \r\n You won: \r\n ${rewardObject.reward}.\r\n Come to claim your prize`,
             reward: rewardObject
         }
-        alert('You won in:' + indicatedSegment.text);
+        setShowModal(true);
+        setRewardWinMsg({
+            msg: `You won: \r\n ${rewardObject.reward}.\r\n we are waiting you at hylabs booth.`,
+            img: [{
+                image: `${process.env.REACT_APP_IMAGES_DIR}${rewardObject.image}`,
+                text: rewardObject.reward
+            }]
+        })
+
         const responseUser = await updateRewardUser(userID, indicatedSegment.text)
         const response = await sendEmail(emailDetails);
         console.log(response, responseUser)
     }
+
+
     return (
-        <>
-            <ContainerMessage>
-                <div id="test" style={{ margin: '0 auto', width: '100%', border: '1px solid blue' }}></div>
-                <h2>
-                    Thank you {fullName.first_name} {fullName.last_name} for your participation in
-                    hylabs lotto
-            </h2>
-                <h3>Click on the button to spin the wheel</h3>
-                <Link to="/">Home page</Link>
-            </ContainerMessage>
-            <WinWheel
-                initalRewards={rewards}
-                // emailUser={emailUser}
-                // userId={userID}
-                alertPrize={winPrizeMsg}
+        <Container>
+            <Backdrop
+                show={showModal}
             />
-            {error && <Alert variant="danger">{error}</Alert>}
-        </>
+            <Modal
+                show={showModal}
+            >
+                <h3>Congratulations!</h3>
+                <h5>{rewardWinMsg.msg}</h5>
+                <RewardImages imagesData={rewardWinMsg.img} />
+                <Link to="/">Navigate to Home page</Link>
+            </Modal>
+            <Row>
+                <ContainerMessage>
+                    <h2>
+                        Thank you {fullName.first_name} {fullName.last_name} for your participation
+            </h2>
+                    <h3>Click on the button to spin the wheel</h3>
+
+                </ContainerMessage>
+            </Row>
+            <Row>
+                <Col>
+                    <WinWheel
+                        initalRewards={rewards}
+                        alertPrize={winPrizeMsg}
+                    />
+                    {error && <Alert variant="danger">{error}</Alert>}
+                </Col>
+            </Row>
+        </Container>
     );
 };
 

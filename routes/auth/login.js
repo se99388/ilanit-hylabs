@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.post('/', (req, res) => {
     const { email, password } = req.body;
-    if (email === 'adieloz@gmail.com' && password === 'tralala') {
+    if (email === 'ofir@hylabs.co.il' && password === '1234') {
         // after succesfull login i save to the user key boolean "isAuth" and i set it to true
         // this is now how the server knows that the user is authorized cause its save this data for the user
         // by its session cookie - look at the explanation in "server.js"

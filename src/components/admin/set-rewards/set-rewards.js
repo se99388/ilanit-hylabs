@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { getRewards, removeReward, updateReward, addReward } from '../../../utils/api';
-import { Button, Form, Table, Col } from 'react-bootstrap';
-import MyForm, { MyAlert } from '../../my-form';
+import { Button,Table} from 'react-bootstrap';
+import { MyAlert } from '../../my-form';
 import { rewardData } from './reward-data';
 import FormReward from './form-reward';
 import WinWheel from '../../win-wheel';
+import { getRewardsImages } from '../../../utils/api';
+import {RewardsTable} from './set-rewards.styled';
 
 const SetRewards = () => {
     const [rewards, setRewards] = useState([]);
@@ -12,13 +14,36 @@ const SetRewards = () => {
     const [newRewardForm, setNewRewardForm] = useState([]);
     const [addRewardBtn, setAddRewardBtn] = useState('Add new reward');
     const [error, setError] = useState(null);
-    const [idReward, setIdReward] = useState({ id: null })
+    const [idReward, setIdReward] = useState(null);
+    const [rewardImage, setRewardImage] = useState(null);
+    const [rewardsImages,setRewardsImages] = useState([])
+    const [obj,setObj] = useState({
+        drones: [
+            { a: 1, b: 2, lat: 3 },
+            { a: 4, b: 5, lat: 6 },
+            { a: 7, b: 8, lat: 9 }
+        ],
+        num2: null,
+        num3: null 
+    })
+    
 
     const allRewards = async () => {
-        console.log("start", rewardData)
+        console.log(obj);
+        setObj((useThisState)=>{
+            const newArr = useThisState.drones;
+            newArr[0].lat = 10;
+            // return {drones: newArr};
+            return useThisState;
+        })
+        
+
+        
+        console.log(obj);
+
+
         try {
             const responseRewards = await getRewards();
-            console.log("responseRewards", responseRewards)
             setRewards(responseRewards)
         } catch (e) {
             setError(e.message);
@@ -29,10 +54,21 @@ const SetRewards = () => {
         allRewards()
     }, [])
 
-    const handleSubmit = async (state) => {
+    const allRewardsImages = async()=>{
+        try{
+            const responseImages = await getRewardsImages();
+            setRewardsImages(responseImages);
+        }catch(e){
+            setError(e.message);
+        }
+      
+    }
+    const handleSubmit = (apiFunc, id = null) => async ({...newState}) => {
+
         try {
-            state.size = state.size || null;
-            const response = await addReward(state);
+            newState.id = id;
+            newState.size = newState.size === '' ? null : newState.size;
+            const response = await apiFunc(newState);
             if (response.error) {
                 setError(response.error)
             }
@@ -42,29 +78,10 @@ const SetRewards = () => {
                 allRewards();
             }
 
-        }catch (e) {
+        } catch (e) {
             setError(e.message)
         }
 
-    }
-    const handleSubmitUpdate = async (state) => {
-        try {
-            state.id = idReward.id;
-            state.size = state.size || null;
-            const response = await updateReward(state);
-            if (response.error){
-                setError(response.error)
-            }
-            else{
-                setError(null);
-                resetStates();
-                allRewards();
-            }
-            
-        } catch (e) {
-            console.log(e)
-            setError(e.message)
-        }
     }
 
     const resetStates = () => {
@@ -89,28 +106,26 @@ const SetRewards = () => {
         setNewRewardForm((prevState) => {
             if (prevState.length) {
                 resetStates()
-                // setAddRewardBtn('Add new reward');
-                // return []
+                return [];
             }
             else {
                 setAddRewardBtn('Cancel new reward');
                 return rewardData;
             }
-        })
+        });
+        allRewardsImages();
     }
 
     const initalUpdateForm = (currentReward) => {
-        //i'm not happy with this solution.
-        const rewardArr = Object.values(currentReward);
-        let rewardDataWithValue = rewardData.map(obj => ({ ...obj }));
-        
-         rewardDataWithValue = rewardDataWithValue.map((item, index) => {
-            item.value = rewardArr[index + 1]
+        let rewardDataWithValue = rewardData.map(obj=>{return{...obj}});
+         rewardDataWithValue = rewardDataWithValue.map((item) => {
+             item.value = currentReward[item.name];
             return item;
-        })
-      
+        });
         setRewardUpdateState(rewardDataWithValue);
-        setIdReward({ id: currentReward.id });
+        setIdReward(currentReward.id);
+        setRewardImage(currentReward.image);
+        allRewardsImages();
     }
     const rewardsTitle = rewards.length ? (
         <tr>
@@ -129,13 +144,16 @@ const SetRewards = () => {
         {rewards.map((reward) =>
             <tr key={reward.id} id={reward.id}>
                 <td>{rowNum++}</td>
-                {Object.entries(reward).map((item, ind) =>
-                    <td key={ind} name={item[0]}>
+                {Object.entries(reward).map((item, index) =>
+                    <td key={index} name={item[0]}>
                         {item[1] || "Empty"}
                     </td>
                 )}
                 <td >
-                    <Button disabled={newRewardForm.length} variant="success" onClick={() => initalUpdateForm(reward)}>Update</Button>
+                    <Button disabled={newRewardForm.length} variant="success" 
+                    onClick={() => initalUpdateForm(reward)}
+                    
+                    >Update</Button>
                 </td>
                 <td >
                     <Button variant="danger" onClick={() => handleRemoveReward(reward.id)}>Remove</Button>
@@ -146,29 +164,32 @@ const SetRewards = () => {
 
     return (
         <>
-            < Table striped bordered hover size="sm" >
+            < RewardsTable striped bordered hover size="sm"  className='rewardsTable'>
                 <thead>
                     {rewardsTitle}
                 </thead>
                 <tbody>
                     {rewardsTableContent}
                 </tbody>
-            </Table >
+            </RewardsTable >
 
            
             <Button disabled={rewardUpdateState.length} variant="dark" onClick={handleNewReward}>{addRewardBtn}</Button>
 
             {newRewardForm.length ? <FormReward 
                 formData={newRewardForm}
-                handleCurrentSubmit={handleSubmit}
+                rewardsImages={rewardsImages}
+                handleCurrentSubmit={handleSubmit(addReward)}
                 submitText="Save new reward"
                 error={error}
             /> :null}
 
             {rewardUpdateState.length ? <FormReward
                 formData={rewardUpdateState}
-                handleCurrentSubmit={handleSubmitUpdate}
+                rewardsImages={rewardsImages}
+                handleCurrentSubmit={handleSubmit(updateReward,idReward)}
                 submitText="Save updated reward"
+                rewardImageSelected={rewardImage}
                 error={error}
             /> : null}
 

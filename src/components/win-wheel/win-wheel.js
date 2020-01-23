@@ -1,45 +1,63 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
-// import './main.css'
-import { ColwheelBack, Canvas, MyButton } from './win-wheel.style';
-import { sendEmail, updateRewardUser } from '../../utils/api';
-import {initalWheelData} from './win-wheel-data'
+import { Row } from 'react-bootstrap';
+import RewardImages from './rewards-images';
+import { ColwheelBack, Canvas, MyButton, MyDiv } from './win-wheel.style';
+import { initalWheelData } from './win-wheel-data'
 
-const COLORS = ['#f6989d', ' #a186be', '#00aef0', '#f26522', 'yellow', '#e70697', '#fff200', '#ee1c24', '#3cb878']
+// const COLORS = ['#FF9AA2', ' #FFB7B2', '#FFDAC1', '#E2F0CB', '#B5EAD7', '#C7CEEA', '#FF9AA2', ' #FFB7B2', '#FFDAC1', '#E2F0CB', '#B5EAD7', '#C7CEEA']
+
+// const COLORS = ['#FBBCCD',
+//  ' #FFFEC3', 
+//  '#E2BEF1',
+//   '#AAE9A4',
+//    '#FFDC97', 
+//     '#A7F0FA', '#FBBCCD',
+//     ' #FFFEC3',
+//     '#E2BEF1',
+//     '#AAE9A4',
+//     '#FFDC97',
+//     '#A7F0FA']
+
+const COLORS = ['#F5CDDE',
+    ' #C6F8E5',
+    '#E4DECB',
+    '#E2BEF1',
+    '#F9DED7',
+    '#CCE1F2',
+    '#FBF7D5', 
+    '#F5CDDE',
+    ' #C6F8E5',
+    '#E2BEF1',
+    '#F9DED7',
+    '#CCE1F2',
+    '#FBF7D5', '#E4DECB',]
 
 
 const WinWheel = ({ initalRewards, alertPrize }) => {
     let theWheel;
     const [displayWheelBtn, setDisplayWheelBtn] = useState(true);
-  
-    
-    
+    const [dataWheel, setDataWheel] = useState([]);
+
     useEffect(() => {
-//filter only rewards with more then 0 quantity
-        const allInstockRewords = initalRewards.filter(reward => reward.quantity > 0);
-        if (allInstockRewords.length) {
-            const segmentsWithImages = allInstockRewords.map((reward, index) => {
+        //filter only rewards with more then 0 quantity
+        const instockRewords = initalRewards.filter(reward => reward.quantity > 0);
+
+        if (instockRewords.length) {
+            const segmentsWithImages = instockRewords.map((reward, index) => {
                 return ({
                     'fillStyle': COLORS[index],
                     'text': reward.reward,
-                    'image':`images/${reward.image}`,
+                    'image': `${process.env.REACT_APP_IMAGES_DIR}${reward.image}`,
                     'size': reward.size
                 })
             })
-              // theWheel = initalWheelData([
-    //     { 'image': 'images/jane.png', 'text': 'Jane' },
-    //     { 'image': 'images/jane.png', 'text': 'Jane' },
-    //     { 'image': 'images/jane.png', 'text': 'Jane' },
-    //     { 'image': 'images/jane.png', 'text' : 'Jane' }
-
-    // ], alertPrize)
-            theWheel =  initalWheelData(segmentsWithImages,alertPrize)
+            setDataWheel(segmentsWithImages)
         }
 
     }, [initalRewards])
 
 
-   
+    theWheel = initalWheelData(dataWheel, alertPrize);
 
     // -------------------------------------------------------
     // Click handler for spin button.
@@ -72,30 +90,36 @@ const WinWheel = ({ initalRewards, alertPrize }) => {
     //     console.log(response, responseUser)
     // }
 
-   
+
 
     return (
         <>
-            {!!initalRewards.length && <Container >
-                <Row className="justify-content-md-center">
-                    <ColwheelBack md="auto">
+            {!!initalRewards.length && < >
+             
+
+                <Row className="justify-content-center">
+                    <ColwheelBack
+                        md="auto"
+                    >
                         <Canvas id="canvas"
                             width="434" height="434"
                         >
                             <p align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
                         </Canvas>
-
+                        {displayWheelBtn &&
+                            <MyDiv>
+                                <MyButton
+                                    xs={10} md={4}
+                                    variant="outline-success"
+                                    size="lg"
+                                    onClick={startSpin}
+                                >SPIN </MyButton>
+                            </MyDiv>}
                     </ColwheelBack>
                 </Row>
-
-                <Row className="justify-content-md-center">
-                    <Col className='text-center' xs={6} md={4} >
-                        {displayWheelBtn && <MyButton
-                            onClick={startSpin}
-                        >Spin </MyButton>}
-                    </Col>
-                </Row>
-            </Container>}
+                <br/>
+                <RewardImages imagesData={dataWheel} />
+            </>}
         </>
     )
 }

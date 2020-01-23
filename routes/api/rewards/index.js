@@ -2,8 +2,12 @@ import { getRewards, removeReward, updateReward, addReward } from '../../../db/r
 import { isValidate } from '../../../src/utils/validation-form';
 import {rewardData} from '../../../src/components/admin/set-rewards/reward-data';
 import express from 'express';
+import rewardsImages from './rewards-images';
+
 
 const router = express.Router();
+
+router.use("/rewards-images", rewardsImages);
 
 const protect = (req, res, next) => {
     if (!req.session.isAuth) {

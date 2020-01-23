@@ -6,10 +6,11 @@ import { getInitialFormValues } from '../../utils/form-data';
 import { ContainerForm, MyAlert } from './my-form.style';
 
 const MyForm = ({ formData, handleCurrentSubmit, submitText, error, renderFormControls }) => {
+
     console.log("getInitialFormValues(formData)", getInitialFormValues(formData))
     return (
         <Formik
-        enableReinitialize
+            enableReinitialize
             initialValues={getInitialFormValues(formData)}
             validationSchema={schemaYup(formData)}
             onSubmit={handleCurrentSubmit}
@@ -22,7 +23,7 @@ const MyForm = ({ formData, handleCurrentSubmit, submitText, error, renderFormCo
                         <Button
                             variant="primary"
                             type="submit"
-                            disabled={!isValuesExist(values) || Object.keys(errors).length}
+                        disabled={!isValuesExist(values) || Object.keys(errors).length}
                         >
                             {submitText}
                         </Button>

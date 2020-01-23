@@ -13,30 +13,30 @@ function playSound() {
 }
 
 export const initalWheelData = (initalData, alertPrize) => {
-   
+    console.log("initalData.length", initalData)
     return new window.Winwheel({
         'numSegments': initalData.length,                 // Specify number of segments.
-        'outerRadius': 212,               // Set outer radius so wheel fits inside the background.    
-        'innerRadius': 30,         // Make wheel hollow so segments don't go all way to center.
-        'textFontSize': 24,         // Set default font size for the segments.
+        'outerRadius': 210,               // Set outer radius so wheel fits inside the background.    
+        'innerRadius': 20,         // Make wheel hollow so segments don't go all way to center.
+        'textFontSize': 18,         // Set default font size for the segments.
         // 'textOrientation': 'vertical', // Make text vertial so goes down from the outside of wheel.
-        'lineWidth': 7, // Width of lines around segments.
+        'lineWidth': 4, // Width of lines around segments.
         'strokeStyle': 'white',      // Segment line colour. Again segment lines only drawn if this is specified.
         'drawText': true,              // Code drawn text can be used with segment images.
 
-        'textMargin': 50,
-        'textFontFamily': 'monospace',
-        'textFontWeight': 'bold',       // Font weight.
-        'textOrientation': 'curved', // Either horizontal, vertical, or curved.
+        'textMargin': 0,
+        // 'textFontFamily': 'monospace',
+        // 'textFontWeight': 'bold',       // Font weight.
+        'textOrientation': 'horizontal', // Either horizontal, vertical, or curved.
         'textAlignment': 'center',     // Either center, inner, or outer.
-        'textDirection': 'normal',     // Either normal or reversed. In normal mode for horizontal text in segment at 3 o'clock is correct way up, in reversed text at 9 o'clock segment is correct way up.
-        'textStrokeStyle': 'black',
-        'textLineWidth': 3,
-        'textFillStyle': 'white',
+        // 'textDirection': 'normal',     // Either normal or reversed. In normal mode for horizontal text in segment at 3 o'clock is correct way up, in reversed text at 9 o'clock segment is correct way up.
+        // 'textStrokeStyle': 'black',
+        // 'textLineWidth': 3,
+        // 'textFillStyle': 'white',
         // 'responsive': true,
 
         // 'imageOverlay': true,
-        'drawMode': 'segmentImage',    // Must be segmentImage to draw wheel using one image per segemnt.
+        'drawMode': 'code',    // Must be segmentImage to draw wheel using one image per segemnt.
         'wheelImage': null,         // Must be set to image data in order to use image to draw the wheel - drawMode must also be 'image'.
         'imageDirection': 'N',          // Used when drawMode is segmentImage. Default is north, can also be (E)ast, (S)outh, (W)est.
         'segments': initalData,                  // Define segments including image and text.

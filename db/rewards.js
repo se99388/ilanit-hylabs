@@ -20,6 +20,7 @@ export const removeReward = id => {
 };
 
 export const updateReward = (id, reward, quantity, image, size) => {
+   
     const sql = `UPDATE rewards
                     SET reward = $2,
                     quantity = $3,
@@ -30,7 +31,7 @@ export const updateReward = (id, reward, quantity, image, size) => {
 };
 
 export const addReward = (reward, quantity, image, size) => {
-    console.log("ofir", reward, quantity, image, size)
+ 
     const sql = `INSERT INTO rewards 
     (reward,
     quantity,

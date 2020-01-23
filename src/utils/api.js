@@ -82,6 +82,13 @@ export const addReward = reward => {
     });
 };
 
+export const getRewardsImages = ()=>{
+    return handler({
+        method:'GET',
+        url:'/api/rewards/rewards-images'
+    })
+}
+
 export const login = (email, password) => {
     return handler({
         url: '/auth/login',
