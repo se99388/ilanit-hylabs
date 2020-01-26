@@ -7,8 +7,8 @@ router.post("/", async(req, res) => {
     try{
         const emailDetails = req.body;
         console.log("email", req.body);
-        const { id, reward, quantity, image } = emailDetails.reward;
-        const responseReward = await updateReward(id, reward, quantity, image)
+        const { id, reward, quantity, image, size } = emailDetails.reward;
+        const responseReward = await updateReward(id, reward, quantity, image, size)
         console.log(responseReward);
         var transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',

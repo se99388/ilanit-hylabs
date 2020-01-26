@@ -2,21 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Row } from 'react-bootstrap';
 import RewardImages from './rewards-images';
 import { ColwheelBack, Canvas, MyButton, MyDiv } from './win-wheel.style';
-import { initalWheelData } from './win-wheel-data'
+import { initalWheelData } from './win-wheel-data';
 
-// const COLORS = ['#FF9AA2', ' #FFB7B2', '#FFDAC1', '#E2F0CB', '#B5EAD7', '#C7CEEA', '#FF9AA2', ' #FFB7B2', '#FFDAC1', '#E2F0CB', '#B5EAD7', '#C7CEEA']
-
-// const COLORS = ['#FBBCCD',
-//  ' #FFFEC3', 
-//  '#E2BEF1',
-//   '#AAE9A4',
-//    '#FFDC97', 
-//     '#A7F0FA', '#FBBCCD',
-//     ' #FFFEC3',
-//     '#E2BEF1',
-//     '#AAE9A4',
-//     '#FFDC97',
-//     '#A7F0FA']
 
 const COLORS = ['#F5CDDE',
     ' #C6F8E5',

@@ -20,7 +20,6 @@ export const removeReward = id => {
 };
 
 export const updateReward = (id, reward, quantity, image, size) => {
-   
     const sql = `UPDATE rewards
                     SET reward = $2,
                     quantity = $3,

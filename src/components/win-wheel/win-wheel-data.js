@@ -3,13 +3,21 @@
 let audio = new Audio('tick.mp3');
 
 // This function is called when the sound is to be played.
-function playSound() {
-    // Stop and rewind the sound if it already happens to be playing.
-    audio.pause();
-    audio.currentTime = 0;
+async function playSound() {
+    try{
+        // Stop and rewind the sound if it already happens to be playing.
+        //ofir:I don't think I need "audio.pause()" in this application
+        // audio.pause();
+        audio.currentTime = 0;
 
-    // Play the sound.
-    audio.play();
+        // Play the sound.
+         //ofir:I think it shoud be run with await because "audio.play()" return promise 
+        await audio.play();
+    // audio.play();
+    }catch(e){
+        console.log("playError: ", e)
+    }
+   
 }
 
 export const initalWheelData = (initalData, alertPrize) => {
