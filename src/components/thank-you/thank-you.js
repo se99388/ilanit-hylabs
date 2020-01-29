@@ -80,9 +80,13 @@ const ThankYou = () => {
         }
         setShowModal(true);
         setRewardWinMsg({
-            msg: `You won: \r\n ${rewardObject.reward}.\r\n we are waiting you at hylabs booth.`,
+            msg: <div>
+                <p>You won: </p>
+                <h4>{rewardObject.reward}</h4>
+                <p>We are waiting you at hylabs booth</p>
+            </div>,
             img: [{
-                image: `${process.env.REACT_APP_IMAGES_DIR}${rewardObject.image}`,
+                image: `/images/fwd/${rewardObject.image}`,
                 text: rewardObject.reward
             }]
         })
@@ -94,7 +98,7 @@ const ThankYou = () => {
 
 
     return (
-        <Container>
+        <Container >
             <Backdrop
                 show={showModal}
             />
@@ -102,7 +106,7 @@ const ThankYou = () => {
                 show={showModal}
             >
                 <h3>Congratulations!</h3>
-                <h5>{rewardWinMsg.msg}</h5>
+                {rewardWinMsg.msg}
                 <RewardImages imagesData={rewardWinMsg.img} />
                 <Link to="/">Navigate to Home page</Link>
             </Modal>
@@ -115,14 +119,14 @@ const ThankYou = () => {
 
                 </ContainerMessage>
             </Row>
-            <Row>
-                <Col>
-                    <WinWheel
-                        initalRewards={rewards}
-                        alertPrize={winPrizeMsg}
-                    />
-                    {error && <Alert variant="danger">{error}</Alert>}
-                </Col>
+            <Row className="justify-content-center">
+
+                <WinWheel
+                    initalRewards={rewards}
+                    alertPrize={winPrizeMsg}
+                />
+                {error && <Alert variant="danger">{error}</Alert>}
+
             </Row>
         </Container>
     );

@@ -19,12 +19,12 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     const userDetails = req.body;
     console.log(userDetails)
-    const { firstName, lastName, email, phone, institute, lab, interests } = userDetails;
+    const { firstName, lastName, email, phone, institute, lab, interests, hylabsJob } = userDetails;
 
     try {
         await isValidate(userDetails, formData);
 
-        const response = await addUser(firstName, lastName, email, phone, institute, lab, interests);
+        const response = await addUser(firstName, lastName, email, phone, institute, lab, interests, hylabsJob);
 
         res.json(response);
     } catch (e) {

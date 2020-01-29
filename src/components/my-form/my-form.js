@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import { getInitialFormValues } from '../../utils/form-data';
 import { ContainerForm, MyAlert } from './my-form.style';
 
-const MyForm = ({ formData, handleCurrentSubmit, submitText, error, renderFormControls }) => {
+const MyForm = ({ formData, handleCurrentSubmit, submitText, renderFormControls, formMsg }) => {
 
     console.log("getInitialFormValues(formData)", getInitialFormValues(formData))
     return (
@@ -13,13 +13,13 @@ const MyForm = ({ formData, handleCurrentSubmit, submitText, error, renderFormCo
             enableReinitialize
             initialValues={getInitialFormValues(formData)}
             validationSchema={schemaYup(formData)}
-            onSubmit={handleCurrentSubmit}
+            onSubmit={(values, { resetForm }) => handleCurrentSubmit(values, resetForm)}
         >
-            {({ errors, touched, handleChange, handleBlur, values, handleSubmit, initialValues }) => {
+            {({ errors, touched, handleChange, handleBlur, values, handleSubmit, initialValues, resetForm }) => {
                 return (
                     <ContainerForm onSubmit={handleSubmit}>
-                        {renderFormControls(errors, touched, handleChange, handleBlur, values, initialValues)}
-                        {error && <MyAlert variant="danger">{error}</MyAlert>}
+                        {renderFormControls(errors, touched, handleChange, handleBlur, values, initialValues, resetForm)}
+                        {formMsg.msg && <MyAlert variant={formMsg.type}>{formMsg.msg}</MyAlert>}
                         <Button
                             variant="primary"
                             type="submit"

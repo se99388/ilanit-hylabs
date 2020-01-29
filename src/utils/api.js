@@ -111,3 +111,12 @@ export const sendEmail = (emailWinMessage)=>{
         data: emailWinMessage
     })
 }
+
+
+export const addHylabsJobReq = request => {
+    return handler({
+        url: `/api/hylabs-jobs/`,
+        method: 'POST',
+        data: request
+    });
+};

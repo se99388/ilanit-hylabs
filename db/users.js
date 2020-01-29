@@ -23,17 +23,18 @@ export const getUser = id => {
     return getRow(sql, id);
 };
 
-export const addUser = (firstName, lastName, email, phone, institute, lab, interests) => {
+export const addUser = (firstName, lastName, email, phone, institute, lab, interests, hylabsJob) => {
     const sql = `INSERT INTO users (first_name,
             last_name,
             email, 
             phone, 
             institute,
             lab,
-            interests)
+            interests,
+        hylabs_job)
             VALUES
-    ($1,$2, $3,$4, $5, $6, $7) RETURNING *`;
-    return getRow(sql, firstName, lastName, email, phone, institute, lab, interests);
+    ($1,$2, $3,$4, $5, $6, $7, $8) RETURNING *`;
+    return getRow(sql, firstName, lastName, email, phone, institute, lab, interests, hylabsJob);
 };
 
 export const updateRewardUser = (id, reward) => {

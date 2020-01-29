@@ -164,7 +164,7 @@ const SetRewards = () => {
 
     return (
         <>
-            < RewardsTable striped bordered hover size="sm"  className='rewardsTable'>
+            < RewardsTable striped bordered hover size="sm" className='rewardsTable' responsive="sm">
                 <thead>
                     {rewardsTitle}
                 </thead>

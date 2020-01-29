@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row } from 'react-bootstrap';
 import RewardImages from './rewards-images';
-import { ColwheelBack, Canvas, MyButton, MyDiv } from './win-wheel.style';
+import { ColwheelBack, Canvas, ColwheelBack2, Canvas2, MyButton, MyDiv} from './win-wheel.style';
 import { initalWheelData } from './win-wheel-data';
 
 
@@ -34,7 +34,8 @@ const WinWheel = ({ initalRewards, alertPrize }) => {
                 return ({
                     'fillStyle': COLORS[index],
                     'text': reward.reward,
-                    'image': `${process.env.REACT_APP_IMAGES_DIR}${reward.image}`,
+                    // 'image': `${process.env.REACT_APP_IMAGES_DIR}${reward.image}`,
+                    'image': `/images/fwd/${reward.image}`,
                     'size': reward.size
                 })
             })
@@ -82,14 +83,13 @@ const WinWheel = ({ initalRewards, alertPrize }) => {
     return (
         <>
             {!!initalRewards.length && < >
-             
-
                 <Row className="justify-content-center">
-                    <ColwheelBack
+                    <ColwheelBack 
                         md="auto"
+                        align="center" 
                     >
                         <Canvas id="canvas"
-                            width="434" height="434"
+                            width="370" height="370"
                         >
                             <p align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
                         </Canvas>
@@ -101,8 +101,30 @@ const WinWheel = ({ initalRewards, alertPrize }) => {
                                     size="lg"
                                     onClick={startSpin}
                                 >SPIN </MyButton>
-                            </MyDiv>}
+                            </MyDiv>
+                        }
                     </ColwheelBack>
+
+                    {/* <ColwheelBack2
+                        md="auto"
+                    >
+                        <Canvas2 id="canvas"
+                            width="434" height="434"
+                        >
+                            <p align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
+                        </Canvas2>
+                        {displayWheelBtn &&
+                            <MyDiv>
+                                <MyButton
+                                    xs={10} md={4}
+                                    variant="outline-success"
+                                    size="lg"
+                                    onClick={startSpin}
+                                >SPIN </MyButton>
+                            </MyDiv>}
+                    </ColwheelBack2> */}
+
+
                 </Row>
                 <br/>
                 <RewardImages imagesData={dataWheel} />

@@ -47,3 +47,13 @@ export const formData = [
         yup: yup.string().required('Write your lab')
     }
 ];
+
+export const hylabsJobInterested = [
+    {
+        type: 'checkbox',
+        labelHeb: 'אני מעוניין להרשם למאגר הצעות עבודה מטעם מעבדות חי',
+        label:"I'd like to sign up for a job proposal database on behalf of HYLABS" ,
+        name: 'hylabsJob',
+        id: 'yes'
+    }
+]

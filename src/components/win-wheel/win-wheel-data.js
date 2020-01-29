@@ -24,9 +24,9 @@ export const initalWheelData = (initalData, alertPrize) => {
     console.log("initalData.length", initalData)
     return new window.Winwheel({
         'numSegments': initalData.length,                 // Specify number of segments.
-        'outerRadius': 210,               // Set outer radius so wheel fits inside the background.    
+        // 'outerRadius': 210,               // Set outer radius so wheel fits inside the background.    
         'innerRadius': 20,         // Make wheel hollow so segments don't go all way to center.
-        'textFontSize': 18,         // Set default font size for the segments.
+        'textFontSize': 17,         // Set default font size for the segments.
         // 'textOrientation': 'vertical', // Make text vertial so goes down from the outside of wheel.
         'lineWidth': 4, // Width of lines around segments.
         'strokeStyle': 'white',      // Segment line colour. Again segment lines only drawn if this is specified.

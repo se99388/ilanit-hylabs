@@ -34,16 +34,26 @@ export const hylabsJobsformData = [
     },
     {
         type: 'text',
-        label: 'Institute/Company',
+        label: 'Institute/Company:',
         placeholder: 'Enter Institute/Company',
         name: 'institute',
         yup: yup.string().required('Write your institute')
     },
     {
         type: 'date',
-        label: 'finish ',
+        label: 'Graduation date:',
         placeholder: 'Enter lab',
-        name: 'lab',
-        yup: yup.string().required('Write your lab')
+        name: 'graduationDate',
+        yup: yup.string().required('Write your graduation date')
     }
 ];
+
+export const hylabsJobsTextarea = [
+    {
+        type: 'textarea',
+        label: 'Notes:',
+        placeholder: 'Enter any notes you would like to add',
+        rows:3,
+        name: 'notes'
+    }
+]
