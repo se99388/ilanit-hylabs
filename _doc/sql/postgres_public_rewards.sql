@@ -1,0 +1,14 @@
+INSERT INTO public.rewards (id, reward, quantity, image, size) VALUES (94, 'Anti theft bag', 197, 'anti_theft_bag.jpg', null);
+INSERT INTO public.rewards (id, reward, quantity, image, size) VALUES (100, 'Notebook', 94, 'notebook.jpg', null);
+INSERT INTO public.rewards (id, reward, quantity, image, size) VALUES (96, 'Spiker Bluetooth', 20, 'spiker_BT.jpg', null);
+INSERT INTO public.rewards (id, reward, quantity, image, size) VALUES (95, 'Pen', 1, 'pen.jpg', 90);
+INSERT INTO public.rewards (id, reward, quantity, image, size) VALUES (97, 'Electric mouse pad', 22, 'electric_mouse_pad.jpg', null);
+INSERT INTO public.rewards (id, reward, quantity, image, size) VALUES (98, 'Key holder', 30, 'key_holder.jpg', null);
+INSERT INTO public.rewards (id, reward, quantity, image, size) VALUES (103, 'Termus', 1, 'termus.jpg', 50);
+INSERT INTO public.rewards (id, reward, quantity, image, size) VALUES (107, 'Organizer', 10, 'organizer.png', null);
+INSERT INTO public.rewards (id, reward, quantity, image, size) VALUES (99, 'Marker', 99, 'marker.jpg', null);
+INSERT INTO public.rewards (id, reward, quantity, image, size) VALUES (43, 'Mouse', 20, 'mouse.jpg', null);
+INSERT INTO public.rewards (id, reward, quantity, image, size) VALUES (101, 'Sport bottle', 39, 'sport_bottle.jpg', null);
+INSERT INTO public.rewards (id, reward, quantity, image, size) VALUES (93, 'Flash light', 25, 'flash_light.jpg', null);
+INSERT INTO public.rewards (id, reward, quantity, image, size) VALUES (102, 'Termi cup', 48, 'termi_cup.jpg', null);
+INSERT INTO public.rewards (id, reward, quantity, image, size) VALUES (104, 'Weight luggage', 48, 'weight_luggage.jpg', 10);

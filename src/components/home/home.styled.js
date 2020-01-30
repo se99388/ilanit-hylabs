@@ -11,5 +11,7 @@ font-weight: ${props.fontWeight};
 margin-right:2px;
 border-radius:5px;
 margin: 1px;
-
+display: flex;
+text-align: center;
+align-items:center; 
 `)

@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import { getInitialFormValues } from '../../utils/form-data';
 import { ContainerForm, MyAlert } from './my-form.style';
 
-const MyForm = ({ formData, handleCurrentSubmit, submitText, renderFormControls, formMsg }) => {
+const MyForm = ({ formData, handleCurrentSubmit, submitText, renderFormControls, formMsg={}, error }) => {
 
     console.log("getInitialFormValues(formData)", getInitialFormValues(formData))
     return (
@@ -19,6 +19,7 @@ const MyForm = ({ formData, handleCurrentSubmit, submitText, renderFormControls,
                 return (
                     <ContainerForm onSubmit={handleSubmit}>
                         {renderFormControls(errors, touched, handleChange, handleBlur, values, initialValues, resetForm)}
+                        {error && <MyAlert variant="danger">{error}</MyAlert>}
                         {formMsg.msg && <MyAlert variant={formMsg.type}>{formMsg.msg}</MyAlert>}
                         <Button
                             variant="primary"

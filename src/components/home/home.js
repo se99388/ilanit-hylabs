@@ -104,15 +104,17 @@ const Home = (props) => {
                             <Form.Label >Field of interests:</Form.Label>
                             <Form.Row className='mb-3'>
                                 {interests.map((group, groupIndex) => (
-                                    <Form.Group key={groupIndex}>
+                                    <Form.Group key={groupIndex} as={Row} className='ml-2 mr-2'>
                                         {group.map((interest) => (
-                                            <InterestCol key={interest.id} xs='auto'
+                                            <InterestCol 
+                                            key={interest.id} 
                                                 backgroundcolor={COLOR[groupIndex]}
 
                                                 fontWeight={checkedItems.get(interest.id) == true ? fontWeight : null}
                                             >
                                                 <Form.Check
                                                     inline
+                                                  
                                                     type={interest.type}
                                                     id={interest.id}
                                                     label={interest.label}
