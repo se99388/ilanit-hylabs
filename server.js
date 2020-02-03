@@ -5,7 +5,7 @@ import routes from './routes';
 
 const app = express();
 
-//app.use(express.static('build'));
+app.use(express.static('build'));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json()); // every post request with content-type "application/json" creates an object under req.body that holds all the request information
@@ -50,7 +50,9 @@ app.use(
 
 app.use(routes);
 
-const port = process.env.PORT || 3001;
-app.listen(port, () => {
-    console.log(`Server started http://localhost:${port}/`);
-});
+module.exports = app;
+
+// const port = process.env.PORT || 3001;
+// app.listen(port, () => {
+//     console.log(`Server started http://localhost:${port}/`);
+// });
