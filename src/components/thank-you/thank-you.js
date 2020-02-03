@@ -107,7 +107,10 @@ const ThankYou = () => {
             >
                 <h3>Congratulations!</h3>
                 {rewardWinMsg.msg}
-                <RewardImages imagesData={rewardWinMsg.img} />
+                <RewardImages
+                    imagesData={rewardWinMsg.img}
+                    ColDivImageSize={5}
+                />
                 <Link to="/">Navigate to Home page</Link>
             </Modal>
             <Row>

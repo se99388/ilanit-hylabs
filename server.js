@@ -52,6 +52,7 @@ app.use(routes);
 
 module.exports = app;
 
+//deleted by Zvi
 // const port = process.env.PORT || 3001;
 // app.listen(port, () => {
 //     console.log(`Server started http://localhost:${port}/`);

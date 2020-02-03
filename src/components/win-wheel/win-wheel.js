@@ -82,6 +82,7 @@ const WinWheel = ({ initalRewards, alertPrize }) => {
 
     return (
         <>
+            {/* Why can I put here 'dataWheel.length' */}
             {!!initalRewards.length && < >
                 <Row className="justify-content-center">
                     <ColwheelBack 
