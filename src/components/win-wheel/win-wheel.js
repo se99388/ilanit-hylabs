@@ -57,31 +57,11 @@ const WinWheel = ({ initalRewards, alertPrize }) => {
 
     }
 
-    // -------------------------------------------------------
-    // Called when the spin animation has finished by the callback feature of the wheel because I specified callback in the parameters.
-    // note the indicated segment is passed in as a parmeter as 99% of the time you will want to know this to inform the user of their prize.
-    // -------------------------------------------------------
-    // async function alertPrize(indicatedSegment) {
-    //     // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
-
-    //     const rewardObject = initalRewards.find(reward => reward.reward === indicatedSegment.text);
-    //     rewardObject.quantity-=1
-    //     const emailDetails = {
-    //         email: emailUser || 'houbara0@gmail.com', 
-    //         title: 'You won - in hylabs lotto', 
-    //         message: `You won in ${indicatedSegment.text}.\r\n we are waiting you in hylabs booth.`,
-    //         reward: rewardObject
-    //     }
-    //     alert('You won in:' + indicatedSegment.text );
-    //     const responseUser = await updateRewardUser(userId, indicatedSegment.text)
-    //     const response = await sendEmail(emailDetails);
-    //     console.log(response, responseUser)
-    // }
-
 
 
     return (
         <>
+    {/* Why can I put here 'dataWheel.length' */}
             {!!initalRewards.length && < >
                 <Row className="justify-content-center">
                     <ColwheelBack 

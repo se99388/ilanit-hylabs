@@ -1,13 +1,13 @@
 import React from 'react';
 import { Row } from 'react-bootstrap';
 import { ColDivImage, MyImage} from './rewards-images.style';
-const RewardsImages = ({imagesData}) =>{
+const RewardsImages = ({ imagesData, ColDivImageSize = 3}) =>{
     console.log("imagesData", imagesData)
 
     const imagesDisplay = imagesData.map((image, index)=>{
         return (
             <ColDivImage key={index} 
-                xs={3} 
+                xs={ColDivImageSize} sm={3} lg={2}
              >
                 <MyImage src={image.image} 
                 thumbnail
