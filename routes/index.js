@@ -27,8 +27,8 @@ router.use('/api', api);
 // i define route only for the login - i want to login will be /auth/login and not under /api - its not api!
 router.use('/auth', auth);
 
-// router.use('/*', (req, res) => {
-//     res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
-// });
+router.use('/*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+});
 
 export default router;

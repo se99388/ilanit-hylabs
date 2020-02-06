@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Row } from 'react-bootstrap';
 import RewardImages from './rewards-images';
-import { ColwheelBack, Canvas, ColwheelBack2, Canvas2, MyButton, MyDiv} from './win-wheel.style';
+import { ColwheelBack, Canvas, ColwheelBack2, Canvas2, MyButton, MyDiv } from './win-wheel.style';
 import { initalWheelData } from './win-wheel-data';
 
-
-const COLORS = ['#F5CDDE',
+const COLORS = [
+    '#F5CDDE',
     ' #C6F8E5',
     '#E4DECB',
     '#E2BEF1',
     '#F9DED7',
     '#CCE1F2',
-    '#FBF7D5', 
+    '#FBF7D5',
     '#F5CDDE',
     ' #C6F8E5',
     '#E2BEF1',
     '#F9DED7',
     '#CCE1F2',
-    '#FBF7D5', '#E4DECB',]
-
+    '#FBF7D5',
+    '#E4DECB'
+];
 
 const WinWheel = ({ initalRewards, alertPrize }) => {
     let theWheel;
@@ -31,19 +32,17 @@ const WinWheel = ({ initalRewards, alertPrize }) => {
 
         if (instockRewords.length) {
             const segmentsWithImages = instockRewords.map((reward, index) => {
-                return ({
-                    'fillStyle': COLORS[index],
-                    'text': reward.reward,
+                return {
+                    fillStyle: COLORS[index],
+                    text: reward.reward,
                     // 'image': `${process.env.REACT_APP_IMAGES_DIR}${reward.image}`,
-                    'image': `/images/fwd/${reward.image}`,
-                    'size': reward.size
-                })
-            })
-            setDataWheel(segmentsWithImages)
+                    image: `/images/fwd/${reward.image}`,
+                    size: reward.size
+                };
+            });
+            setDataWheel(segmentsWithImages);
         }
-
-    }, [initalRewards])
-
+    }, [initalRewards]);
 
     theWheel = initalWheelData(dataWheel, alertPrize);
 
@@ -51,41 +50,38 @@ const WinWheel = ({ initalRewards, alertPrize }) => {
     // Click handler for spin button.
     // -------------------------------------------------------
     function startSpin() {
-
         theWheel.startAnimation();
-        setDisplayWheelBtn(false)
-
+        setDisplayWheelBtn(false);
     }
-
-
 
     return (
         <>
-    {/* Why can I put here 'dataWheel.length' */}
-            {!!initalRewards.length && < >
-                <Row className="justify-content-center">
-                    <ColwheelBack 
-                        md="auto"
-                        align="center" 
-                    >
-                        <Canvas id="canvas"
-                            width="370" height="370"
-                        >
-                            <p align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
-                        </Canvas>
-                        {displayWheelBtn &&
-                            <MyDiv>
-                                <MyButton
-                                    xs={10} md={4}
-                                    variant="outline-success"
-                                    size="lg"
-                                    onClick={startSpin}
-                                >SPIN </MyButton>
-                            </MyDiv>
-                        }
-                    </ColwheelBack>
+            {/* Why can I put here 'dataWheel.length' */}
+            {!!initalRewards.length && (
+                <>
+                    <Row className="justify-content-center">
+                        <ColwheelBack md="auto" align="center">
+                            <Canvas id="canvas" width="370" height="370">
+                                <p align="center">
+                                    Sorry, your browser doesn't support canvas. Please try another.
+                                </p>
+                            </Canvas>
+                            {displayWheelBtn && (
+                                <MyDiv>
+                                    <MyButton
+                                        xs={10}
+                                        md={4}
+                                        variant="outline-success"
+                                        size="lg"
+                                        onClick={startSpin}
+                                    >
+                                        SPIN{' '}
+                                    </MyButton>
+                                </MyDiv>
+                            )}
+                        </ColwheelBack>
 
-                    {/* <ColwheelBack2
+                        {/* <ColwheelBack2
                         md="auto"
                     >
                         <Canvas2 id="canvas"
@@ -103,14 +99,13 @@ const WinWheel = ({ initalRewards, alertPrize }) => {
                                 >SPIN </MyButton>
                             </MyDiv>}
                     </ColwheelBack2> */}
-
-
-                </Row>
-                <br/>
-                <RewardImages imagesData={dataWheel} />
-            </>}
+                    </Row>
+                    <br />
+                    <RewardImages imagesData={dataWheel} />
+                </>
+            )}
         </>
-    )
-}
+    );
+};
 
 export default WinWheel;
