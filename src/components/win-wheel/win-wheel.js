@@ -44,7 +44,10 @@ const WinWheel = ({ initalRewards, alertPrize }) => {
         }
     }, [initalRewards]);
 
-    theWheel = initalWheelData(dataWheel, alertPrize);
+    useEffect(()=>{
+        theWheel = initalWheelData(dataWheel, alertPrize);
+    }, [dataWheel]);
+    
 
     // -------------------------------------------------------
     // Click handler for spin button.
@@ -56,12 +59,13 @@ const WinWheel = ({ initalRewards, alertPrize }) => {
 
     return (
         <>
-            {/* Why can I put here 'dataWheel.length' */}
-            {!!initalRewards.length && (
+            {!!dataWheel.length && (
                 <>
                     <Row className="justify-content-center">
                         <ColwheelBack md="auto" align="center">
-                            <Canvas id="canvas" width="370" height="370">
+                            <Canvas id="canvas"
+                            //  width="370" height="370"
+                             >
                                 <p align="center">
                                     Sorry, your browser doesn't support canvas. Please try another.
                                 </p>
@@ -80,25 +84,6 @@ const WinWheel = ({ initalRewards, alertPrize }) => {
                                 </MyDiv>
                             )}
                         </ColwheelBack>
-
-                        {/* <ColwheelBack2
-                        md="auto"
-                    >
-                        <Canvas2 id="canvas"
-                            width="434" height="434"
-                        >
-                            <p align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
-                        </Canvas2>
-                        {displayWheelBtn &&
-                            <MyDiv>
-                                <MyButton
-                                    xs={10} md={4}
-                                    variant="outline-success"
-                                    size="lg"
-                                    onClick={startSpin}
-                                >SPIN </MyButton>
-                            </MyDiv>}
-                    </ColwheelBack2> */}
                     </Row>
                     <br />
                     <RewardImages imagesData={dataWheel} />

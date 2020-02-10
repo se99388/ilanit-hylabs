@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Form, Alert, Container } from 'react-bootstrap';
+import { Form, Alert, Container, Button } from 'react-bootstrap';
 
 export const ContainerForm = styled(Form)({
     padding: '10px 20px',
@@ -10,3 +10,10 @@ export const ContainerForm = styled(Form)({
 export const MyAlert = styled(Alert)({
     marginTop: '5px'
 });
+
+export const MyButton = styled(Button)`
+&:disabled{
+background-color: grey;
+border-color: grey;
+}
+`

@@ -3,9 +3,9 @@ import {Col, Button} from 'react-bootstrap';
 import wheel_back from './wheel_back_1.png';
 
 
-export const Canvas = styled.canvas`
-/* width:380px;
-height:380px;  */
+export const Canvas = styled.canvas.attrs((props)=>(
+    {width: '370px', height: '370px' }
+) )`
 margin-top:65px;
 `
 export const ColwheelBack = styled(Col)`
@@ -16,10 +16,6 @@ padding: 0px;
 background-image: url(${wheel_back});
 /* background-size: contain; */
 background-size: cover;
-    /* background-position: 'center';
-    background-repeat: 'none';
-
-    vertical-align:"center"; */
 `
 
 export const Canvas2 = styled.canvas`
