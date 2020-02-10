@@ -18,7 +18,7 @@ const FormReward = ({ formData,
                 renderFormControls={(errors, touched, handleChange, handleBlur, initialValues) => {
                     const allFormData =
                         formData.map((item, index) => (
-                                <Form.Group as={Col} key={index} sm={4} >
+                            <Form.Group as={Col} key={index} sm={4} >
                                 <Form.Label>{item.label}</Form.Label>
 
                                 <Form.Control
@@ -43,7 +43,7 @@ const FormReward = ({ formData,
                                 <Form.Control as="select"
                                     name="image"
                                     // defaultValue={rewardImageSelected || ''}
-                                    defaultValue={ ''}
+                                    defaultValue={''}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                 >
@@ -51,14 +51,15 @@ const FormReward = ({ formData,
                                     {rewardsImages.map((item, index) => <option
                                         key={index}
                                         value={item}
-
-                                    >{item}</option>)}
+                                    >
+                                        {item}
+                                    </option>)}
                                 </Form.Control>
                             </Form.Group>)
                     }
-                    return (<div style={{ display: 'flex', flexWrap: 'wrap'}}>
+                    return (<div style={{ display: 'flex', flexWrap: 'wrap' }}>
                         {allFormData}
-                        </div>);
+                    </div>);
                 }}
             />
         </>

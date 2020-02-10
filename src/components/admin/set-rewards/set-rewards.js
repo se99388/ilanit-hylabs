@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { getRewards, removeReward, updateReward, addReward } from '../../../utils/api';
-import { Button,Table} from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import { MyAlert } from '../../my-form';
 import { rewardData } from './reward-data';
 import FormReward from './form-reward';
 import WinWheel from '../../win-wheel';
 import { getRewardsImages } from '../../../utils/api';
-import {RewardsTable} from './set-rewards.styled';
+import { RewardsTable } from './set-rewards.styled';
 
 const SetRewards = () => {
     const [rewards, setRewards] = useState([]);
@@ -16,55 +16,30 @@ const SetRewards = () => {
     const [error, setError] = useState(null);
     const [idReward, setIdReward] = useState(null);
     const [rewardImage, setRewardImage] = useState(null);
-    const [rewardsImages,setRewardsImages] = useState([])
-    const [obj,setObj] = useState({
-        drones: [
-            { a: 1, b: 2, lat: 3 },
-            { a: 4, b: 5, lat: 6 },
-            { a: 7, b: 8, lat: 9 }
-        ],
-        num2: null,
-        num3: null 
-    })
-    
+    const [rewardsImages, setRewardsImages] = useState([])
 
     const allRewards = async () => {
-        console.log(obj);
-        setObj((useThisState)=>{
-            const newArr = useThisState.drones;
-            newArr[0].lat = 10;
-            // return {drones: newArr};
-            return useThisState;
-        })
-        
-
-        
-        console.log(obj);
-
-
         try {
             const responseRewards = await getRewards();
             setRewards(responseRewards)
         } catch (e) {
             setError(e.message);
         }
-
     }
     useEffect(() => {
         allRewards()
     }, [])
 
-    const allRewardsImages = async()=>{
-        try{
+    const allRewardsImages = async () => {
+        try {
             const responseImages = await getRewardsImages();
             setRewardsImages(responseImages);
-        }catch(e){
+        } catch (e) {
             setError(e.message);
         }
-      
     }
-    const handleSubmit = (apiFunc, id = null) => async ({...newState}) => {
 
+    const handleSubmit = (apiFunc, id = null) => async ({ ...newState }) => {
         try {
             newState.id = id;
             newState.size = newState.size === '' ? null : newState.size;
@@ -81,7 +56,6 @@ const SetRewards = () => {
         } catch (e) {
             setError(e.message)
         }
-
     }
 
     const resetStates = () => {
@@ -117,9 +91,9 @@ const SetRewards = () => {
     }
 
     const initalUpdateForm = (currentReward) => {
-        let rewardDataWithValue = rewardData.map(obj=>{return{...obj}});
-         rewardDataWithValue = rewardDataWithValue.map((item) => {
-             item.value = currentReward[item.name];
+        let rewardDataWithValue = rewardData.map(obj => { return { ...obj } });
+        rewardDataWithValue = rewardDataWithValue.map((item) => {
+            item.value = currentReward[item.name];
             return item;
         });
         setRewardUpdateState(rewardDataWithValue);
@@ -150,9 +124,9 @@ const SetRewards = () => {
                     </td>
                 )}
                 <td >
-                    <Button disabled={newRewardForm.length} variant="success" 
-                    onClick={() => initalUpdateForm(reward)}
-                    
+                    <Button disabled={newRewardForm.length} variant="success"
+                        onClick={() => initalUpdateForm(reward)}
+
                     >Update</Button>
                 </td>
                 <td >
@@ -173,21 +147,21 @@ const SetRewards = () => {
                 </tbody>
             </RewardsTable >
 
-           
+
             <Button disabled={rewardUpdateState.length} variant="dark" onClick={handleNewReward}>{addRewardBtn}</Button>
 
-            {newRewardForm.length ? <FormReward 
+            {newRewardForm.length ? <FormReward
                 formData={newRewardForm}
                 rewardsImages={rewardsImages}
                 handleCurrentSubmit={handleSubmit(addReward)}
                 submitText="Save new reward"
                 error={error}
-            /> :null}
+            /> : null}
 
             {rewardUpdateState.length ? <FormReward
                 formData={rewardUpdateState}
                 rewardsImages={rewardsImages}
-                handleCurrentSubmit={handleSubmit(updateReward,idReward)}
+                handleCurrentSubmit={handleSubmit(updateReward, idReward)}
                 submitText="Save updated reward"
                 rewardImageSelected={rewardImage}
                 error={error}
